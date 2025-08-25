@@ -23,7 +23,7 @@ import { HomeBox } from "../../_components/home-box";
 export const HomeLibrary: React.FC = () => {
     return (
         <div id="home-library" className="w-full h-[100vh] relative flex flex-col">
-            <div id="home-library-photos" className="w-full h-[50%] bg-red-300">
+            <div id="home-library-photos" className="w-full h-[50%] bg-linear-to-r from-cyan-300 to-pink-300">
                 <Carousel className="w-full h-full" opts={{ loop: true }} plugins={[
                     Autoplay({
                         delay: 3000,

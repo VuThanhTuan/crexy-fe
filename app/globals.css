@@ -46,6 +46,7 @@
 @theme {
   --color-crexy-primary: #32062C;
   --color-crexy-secondary: #771669;
+  --color-crexy-tertiary: #FFF7F7;
 }
 
 :root {
@@ -124,4 +125,59 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Full page scroll styles */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Custom scrollbar styles for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced smooth scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+}
+
+/* Improved snap scrolling */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Smooth transitions for scroll sections */
+.scroll-section {
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Hover effects for scrollbar */
+.smooth-scroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Firefox scrollbar styling */
+.smooth-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
