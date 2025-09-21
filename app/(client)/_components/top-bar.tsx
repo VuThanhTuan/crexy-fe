@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react"
 import Link from "next/link"
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon, Search, ShoppingBag, UserRound } from "lucide-react"
+import { Search, ShoppingBag, UserRound } from "lucide-react"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -9,7 +9,6 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import Image, { StaticImageData } from "next/image"
 import Logo from "@/public/images/CrexyLogo.png" // Adjust the path to your logo image
@@ -178,25 +177,6 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
     )
 }
 
-function ListItem({
-    title,
-    children,
-    href,
-    ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-    return (
-        <li {...props}>
-            <NavigationMenuLink asChild>
-                <Link href={href}>
-                    <div className="text-md leading-none font-bold">{title}</div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                        {children}
-                    </p>
-                </Link>
-            </NavigationMenuLink>
-        </li>
-    )
-}
 
 interface ProductCategoryMenuItemProps extends React.ComponentPropsWithoutRef<"div"> {
     title: string;

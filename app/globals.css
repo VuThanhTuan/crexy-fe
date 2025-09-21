@@ -173,3 +173,9 @@ html, body {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
+
+/* Products page specific styles to override global overflow hidden */
+.products-page {
+  height: 100vh;
+  overflow-y: auto;
+}
