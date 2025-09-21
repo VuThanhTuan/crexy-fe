@@ -16,9 +16,16 @@ export type Product = {
 type ProductBoxProps = {
     className?: string
     product: Product
+    width?: string
+    height?: string
 }
 
-export const ProductBox = ({ className, product }: ProductBoxProps) => {
+export const ProductBox = ({ 
+    className, 
+    product, 
+    width = "w-[340px] md:w-[360px]", 
+    height = "h-[600px]" 
+}: ProductBoxProps) => {
     const { name, price, image, collectionName, discount } = product;
     const [isHovered, setIsHovered] = useState(false);
 
@@ -31,7 +38,9 @@ export const ProductBox = ({ className, product }: ProductBoxProps) => {
     return (
         <div
             className={cn(
-                "relative w-[340px] md:w-[360px] h-[600px] overflow-hidden border-b-2 border-crexy-secondary bg-white cursor-pointer",
+                "relative overflow-hidden border-b-2 border-crexy-secondary bg-white cursor-pointer",
+                width,
+                height,
                 className,
             )}
             onMouseEnter={() => setIsHovered(true)}

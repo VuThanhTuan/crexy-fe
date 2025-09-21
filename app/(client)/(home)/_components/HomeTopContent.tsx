@@ -22,7 +22,7 @@ export const HomeTopContent: React.FC = () => {
                     <Button className="mt-4 font-bold" variant="primary" size="xl">Mua ngay</Button>
                 </motion.div>
             </div>
-            <TopBar />
+            <TopBar variant="transparent" />
         </div>
     )
 }

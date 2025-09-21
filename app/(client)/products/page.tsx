@@ -83,7 +83,7 @@ export default function ProductsPage() {
 
             {/* Hero Section */}
             <ProductHero
-                backgroundImage="/images/Creaxy-Bg.png"
+                backgroundImage="/images/Creaxy-Bg2.jpeg"
                 title={activeCategory === "All" ? "Tất cả sản phẩm" : activeCategory}
             />
 

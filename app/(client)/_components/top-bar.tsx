@@ -60,7 +60,9 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                 <NavigationMenu viewport={false}>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">Trang chủ</NavigationMenuTrigger>
+                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
+                                <Link href="/">Trang chủ</Link>
+                            </NavigationMenuTrigger>
                             <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200">
                                 <ul className="grid gap-2 w-[600px] lg:grid-cols-[.75fr_1fr]">
                                     <li className="row-span-3">
@@ -100,7 +102,9 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">Sản phẩm</NavigationMenuTrigger>
+                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
+                                <Link href="/products">Sản phẩm</Link>
+                            </NavigationMenuTrigger>
                             <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200 left-[-120px]">
                                 <div className="grid gap-2 w-[600px] md:grid-cols-2">
                                     <div>

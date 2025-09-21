@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface ProductHeroProps {
@@ -14,16 +13,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
     className
 }) => {
     return (
-        <div className={cn("relative h-96 w-full overflow-hidden", className)}>
-            {/* Background Image */}
-            <Image
-                src={backgroundImage}
-                alt={title}
-                fill
-                className="object-cover w-full h-full"
-                priority
-            />
-            
+        <div className={cn("relative h-96 w-full overflow-hidden bg-cover bg-center", className)} style={{ backgroundImage: `url(${backgroundImage})` }}>
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/20" />
             
