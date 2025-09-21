@@ -153,21 +153,13 @@ html, body {
 
 /* Enhanced smooth scrolling */
 .smooth-scroll {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: y mandatory;
-  scroll-snap-stop: always;
-}
-
-/* Improved snap scrolling */
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 /* Smooth transitions for scroll sections */
 .scroll-section {
-  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }
 

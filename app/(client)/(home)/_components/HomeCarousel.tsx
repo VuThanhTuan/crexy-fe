@@ -8,7 +8,7 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import Fade from "embla-carousel-fade";
 import Slide1 from "@/public/images/Slide2.jpg"
-import Slide2 from "@/public/images/Slide4.jpg"
+import Slide2 from "@/public/images/Creaxy-Bg2.jpeg"
 import Slide3 from "@/public/images/Slide5.jpg"
 import Image from "next/image"
 

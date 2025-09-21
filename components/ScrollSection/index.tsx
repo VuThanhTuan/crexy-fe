@@ -33,7 +33,7 @@ export const ScrollSection: React.FC<ScrollSectionProps> = ({ children, classNam
 		<section
 			ref={sectionRef}
 			className={clsx(
-				"snap-section scroll-section transition-all duration-2000 ease-out",
+				"snap-section scroll-section transition-all duration-1000 ease-out",
 				className
 			)}
 		>

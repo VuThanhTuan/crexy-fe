@@ -18,6 +18,7 @@ import Image from "next/image"
 import Autoplay from "embla-carousel-autoplay"
 import Bg from "@/public/images/Bg5.jpg";
 import { HomeBox } from "../../_components/home-box";
+import { motion } from "framer-motion";
 
 
 export const HomeLibrary: React.FC = () => {
@@ -46,7 +47,18 @@ export const HomeLibrary: React.FC = () => {
             </div>
             <div id="home-library-information" className="w-full h-[50%] flex justify-center items-center"
                 style={{ backgroundImage: `url(${Bg.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                <HomeBox />
+                <motion.div initial={{ opacity: 0, scale: 0.5 }}
+                    transition={{
+                        duration: 0.5,
+                        delay: 0.5,
+                        ease: [0, 0.71, 0.2, 1.01],
+                    }} whileInView={{
+                        opacity: 1,
+                        scale: 1,
+                    }} >
+                    <HomeBox />
+                </motion.div>
+
             </div>
         </div>
     )

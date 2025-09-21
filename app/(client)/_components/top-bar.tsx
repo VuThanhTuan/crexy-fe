@@ -20,8 +20,12 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { motion } from "framer-motion"
 
+interface TopBarProps {
+    variant?: 'default' | 'transparent' | 'solid'
+    className?: string
+}
 
-const TopBar: React.FC = () => {
+const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
 
     const [productCategoryImage, setProductCategoryImage] = useState<StaticImageData>(CuteClothes);
 
@@ -37,8 +41,19 @@ const TopBar: React.FC = () => {
         setProductCategoryImage(SwimWear);
     }
 
+    const getVariantStyles = () => {
+        switch (variant) {
+            case 'transparent':
+                return 'bg-transparent absolute top-0 left-0 right-0'
+            case 'solid':
+                return 'bg-white shadow-sm'
+            default:
+                return 'bg-white/95 backdrop-blur-sm'
+        }
+    }
+
     return (
-        <div className="relative w-full flex flex-row justify-between p-8 z-20">
+        <div className={`relative w-full flex flex-row justify-between p-8 z-20 ${getVariantStyles()} ${className}`}>
             <div>
                 <Image alt="" src={Logo} width={100} height={100} />
             </div>

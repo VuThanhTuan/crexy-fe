@@ -1,11 +1,13 @@
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 export type Product = {
     id: string
     name: string
     price: number
     image: string
+    behindImage: string
     description: string
     collectionName: string
     discount?: number
@@ -17,7 +19,8 @@ type ProductBoxProps = {
 }
 
 export const ProductBox = ({ className, product }: ProductBoxProps) => {
-    const { name, price, image, collectionName, discount } = product
+    const { name, price, image, collectionName, discount } = product;
+    const [isHovered, setIsHovered] = useState(false);
 
     const hasDiscount = typeof discount === "number" && discount > 0
     const discountedPrice = hasDiscount ? Math.round(price * (1 - (discount as number) / 100)) : null
@@ -28,16 +31,31 @@ export const ProductBox = ({ className, product }: ProductBoxProps) => {
     return (
         <div
             className={cn(
-                "relative w-[340px] md:w-[360px] h-[600px] overflow-hidden border-b-2 border-crexy-secondary bg-white",
+                "relative w-[340px] md:w-[360px] h-[600px] overflow-hidden border-b-2 border-crexy-secondary bg-white cursor-pointer",
                 className,
             )}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
             <div className="relative h-[78%] w-full">
                 <Image
                     src={image}
                     alt={name}
                     fill
-                    className="object-cover"
+                    className={cn(
+                        "object-cover transition-opacity duration-400 ease-in-out",
+                        isHovered ? "opacity-0" : "opacity-100"
+                    )}
+                    sizes="(max-width: 768px) 340px, 360px"
+                />
+                <Image
+                    src={product.behindImage}
+                    alt={`${name} - alternate view`}
+                    fill
+                    className={cn(
+                        "object-cover transition-opacity duration-400 ease-in-out",
+                        isHovered ? "opacity-100" : "opacity-0"
+                    )}
                     sizes="(max-width: 768px) 340px, 360px"
                 />
 
