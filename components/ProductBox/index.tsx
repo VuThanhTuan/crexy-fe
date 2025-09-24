@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 
@@ -23,7 +24,7 @@ type ProductBoxProps = {
 export const ProductBox = ({ 
     className, 
     product, 
-    width = "w-[340px] md:w-[360px]", 
+    width = "w-[340px]", 
     height = "h-[600px]" 
 }: ProductBoxProps) => {
     const { name, price, image, collectionName, discount } = product;
@@ -36,16 +37,17 @@ export const ProductBox = ({
         value.toLocaleString("vi-VN", { style: "currency", currency: "VND", maximumFractionDigits: 0 })
 
     return (
-        <div
-            className={cn(
-                "relative overflow-hidden border-b-2 border-crexy-secondary bg-white cursor-pointer",
-                width,
-                height,
-                className,
-            )}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
+        <Link href={`/products/${product.id}`}>
+            <div
+                className={cn(
+                    "relative overflow-hidden border-b-2 border-crexy-secondary bg-white cursor-pointer",
+                    width,
+                    height,
+                    className,
+                )}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
             <div className="relative h-[78%] w-full">
                 <Image
                     src={image}
@@ -101,5 +103,6 @@ export const ProductBox = ({
                 </div>
             </div>
         </div>
+        </Link>
     )
 }

@@ -2,6 +2,8 @@
 import * as React from "react"
 import Link from "next/link"
 import { Search, ShoppingBag, UserRound } from "lucide-react"
+import { useState } from "react"
+import { MiniCart } from "@/components/MiniCart"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -16,7 +18,6 @@ import CuteClothes from "@/public/images/List2.jpg"
 import SleepWear from "@/public/images/List1.jpg"
 import SwimWear from "@/public/images/List5.jpg"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
 import { motion } from "framer-motion"
 
 interface TopBarProps {
@@ -50,6 +51,8 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                 return 'bg-white/95 backdrop-blur-sm'
         }
     }
+
+    const [openMiniCart, setOpenMiniCart] = useState(false)
 
     return (
         <div className={`relative w-full flex flex-row justify-between p-8 z-20 ${getVariantStyles()} ${className}`}>
@@ -168,14 +171,13 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuLink asChild className="bg-transparent">
-                                <Link href="/register" className="text-sm font-medium">
-                                    <ShoppingBag className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
-                                </Link>
-                            </NavigationMenuLink>
+                            <Link href="#" onClick={() => setOpenMiniCart(true)} className="font-medium">
+                                <ShoppingBag className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
+                            </Link>
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
+                <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
             </div>
         </div>
     )

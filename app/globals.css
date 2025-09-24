@@ -130,7 +130,8 @@
 /* Full page scroll styles */
 html, body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Custom scrollbar styles for webkit browsers */
