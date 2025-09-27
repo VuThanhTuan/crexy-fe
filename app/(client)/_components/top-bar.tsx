@@ -4,6 +4,9 @@ import Link from "next/link"
 import { Search, ShoppingBag, UserRound } from "lucide-react"
 import { useState } from "react"
 import { MiniCart } from "@/components/MiniCart"
+import { AuthModal } from "@/components/AuthModal"
+import { SearchModal } from "@/components/SearchModal"
+import { useCartStore } from "@/hooks/use-cart-store"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -28,6 +31,7 @@ interface TopBarProps {
 const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
 
     const [productCategoryImage, setProductCategoryImage] = useState<StaticImageData>(CuteClothes);
+    const totalQuantity = useCartStore(s => s.totalQuantity());
 
     const onHoverCuteClothes = () => {
         setProductCategoryImage(CuteClothes);
@@ -46,16 +50,18 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
             case 'transparent':
                 return 'bg-transparent absolute top-0 left-0 right-0'
             case 'solid':
-                return 'bg-white shadow-sm'
+                return 'bg-linear-to-t from-rose-200 via-pink-200 to-purple-200'
             default:
                 return 'bg-white/95 backdrop-blur-sm'
         }
     }
 
     const [openMiniCart, setOpenMiniCart] = useState(false)
+    const [openLogin, setOpenLogin] = useState(false)
+    const [openSearch, setOpenSearch] = useState(false)
 
     return (
-        <div className={`relative w-full flex flex-row justify-between p-8 z-20 ${getVariantStyles()} ${className}`}>
+        <div className={`relative w-full flex flex-row justify-between p-4 z-20 ${getVariantStyles()} ${className}`}>
             <div>
                 <Image alt="" src={Logo} width={100} height={100} />
             </div>
@@ -63,46 +69,9 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                 <NavigationMenu viewport={false}>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
+                            <NavigationMenuLink className="w-[120px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
                                 <Link href="/">Trang chủ</Link>
-                            </NavigationMenuTrigger>
-                            <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200">
-                                <ul className="grid gap-2 w-[600px] lg:grid-cols-[.75fr_1fr]">
-                                    <li className="row-span-3">
-                                        <Image src={Logo} alt="Crexy Logo" />
-                                    </li>
-                                    <li>
-                                        <NavigationMenuLink asChild>
-                                            <Link href={'/'}>
-                                                <div className="text-xl text-crexy-secondary leading-none font-bold">crexy.me</div>
-                                                <p className="line-clamp-2 text-crexy-primary text-sm leading-snug">
-                                                    Cửa hành thời trang với những thiết kế đầy tính sáng tạo và cá tính tôn. Xem thêm...
-                                                </p>
-                                            </Link>
-                                        </NavigationMenuLink>
-                                    </li>
-                                    <li>
-                                        <NavigationMenuLink asChild>
-                                            <Link href={'/'}>
-                                                <div className="text-md text-crexy-primary leading-none font-bold">Chính sách đổi trả</div>
-                                                <p className="line-clamp-2 text-crexy-primary text-sm leading-snug">
-                                                    Chính sách đổi trả sản phẩm được thiết kế để đảm bảo sự thoải mái và hài lòng. Chi tiết...
-                                                </p>
-                                            </Link>
-                                        </NavigationMenuLink>
-                                    </li>
-                                    <li>
-                                        <NavigationMenuLink asChild>
-                                            <Link href={'/'}>
-                                                <div className="text-md text-crexy-primary leading-none font-bold">Chính sách giao hàng</div>
-                                                <p className="line-clamp-2 text-crexy-primary text-sm leading-snug">
-                                                    Chính sách giao hàng sản phẩm được thiết kế để đảm bảo sự thoải mái và hài lòng. Chi tiết...
-                                                </p>
-                                            </Link>
-                                        </NavigationMenuLink>
-                                    </li>
-                                </ul>
-                            </NavigationMenuContent>
+                            </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
@@ -126,29 +95,15 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">Bộ sưu tập</NavigationMenuTrigger>
-                            <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200 left-[-200px]">
-                                <div className="grid gap-2 w-[600px] md:grid-cols-2">
-                                    <div>
-                                        <Image className="h-[400px] w-[300px] object-cover" src={productCategoryImage} alt="Crexy Logo" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <h3 className="text-crexy-primary text-xl font-bold pt-4 pl-4">Các bộ sưu tập hot nhất</h3>
-                                        <div className="flex flex-col flex-1 gap-2 pt-2 pl-4">
-                                            <ProductCategoryMenuItem onMouseEnter={onHoverCuteClothes} title="Bộ sưu tập đầu tiên" href="/" />
-                                            <ProductCategoryMenuItem onMouseEnter={onHoverSleepWear} title="Bộ sưu tập mùa hè" href="/" />
-                                            <ProductCategoryMenuItem onMouseEnter={onHoverSwimWear} title="Bộ sưu tập mùa hè thu" href="/" />
-                                        </div>
-                                        <Button className="mt-4 font-bold" variant="primary" size="xl">Xem thêm</Button>
-                                    </div>
-                                </div>
-                            </NavigationMenuContent>
+                            <NavigationMenuLink className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
+                                <Link href="/collections">Bộ sưu tập</Link>
+                            </NavigationMenuLink>
                         </NavigationMenuItem>
-                        <NavigationMenuItem>
+                        {/* <NavigationMenuItem>
                             <NavigationMenuLink asChild className="w-[80px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent uppercase">
                                 <Link href="/blog">Blog</Link>
                             </NavigationMenuLink>
-                        </NavigationMenuItem>
+                        </NavigationMenuItem> */}
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
@@ -158,26 +113,38 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <NavigationMenuLink asChild>
-                                <Link href="/login" className="font-medium">
+                                <Link href="#"
+                                    onClick={() => setOpenSearch(true)}
+                                    className="font-medium cursor-pointer"
+                                >
                                     <Search className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
                                 </Link>
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuLink asChild>
-                                <Link href="/login" className="font-medium">
+                                <Link href="#" onClick={() => setOpenLogin(true)} className="font-medium">
                                     <UserRound className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
                                 </Link>
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <Link href="#" onClick={() => setOpenMiniCart(true)} className="font-medium">
-                                <ShoppingBag className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
-                            </Link>
+                            <NavigationMenuLink asChild>
+                                <Link href="#" onClick={() => setOpenMiniCart(true)} className="font-medium relative">
+                                    <ShoppingBag className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
+                                    {totalQuantity > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                                            {totalQuantity}
+                                        </span>
+                                    )}
+                                </Link>
+                            </NavigationMenuLink>
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
                 <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
+                <AuthModal open={openLogin} onClose={() => setOpenLogin(false)} />
+                <SearchModal open={openSearch} onClose={() => setOpenSearch(false)} />
             </div>
         </div>
     )
