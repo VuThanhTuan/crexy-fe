@@ -3,10 +3,8 @@ import * as React from "react"
 import Link from "next/link"
 import { Search, ShoppingBag, UserRound } from "lucide-react"
 import { useState } from "react"
-import { MiniCart } from "@/components/MiniCart"
-import { AuthModal } from "@/components/AuthModal"
-import { SearchModal } from "@/components/SearchModal"
 import { useCartStore } from "@/hooks/use-cart-store"
+import { useModalStore } from "@/hooks/use-modal-store"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -28,7 +26,7 @@ interface TopBarProps {
     className?: string
 }
 
-const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
+const   TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
 
     const [productCategoryImage, setProductCategoryImage] = useState<StaticImageData>(CuteClothes);
     const totalQuantity = useCartStore(s => s.totalQuantity());
@@ -48,20 +46,18 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
     const getVariantStyles = () => {
         switch (variant) {
             case 'transparent':
-                return 'bg-transparent absolute top-0 left-0 right-0'
+                return 'text-white bg-transparent fixed! top-0 left-0 right-0'
             case 'solid':
-                return 'bg-linear-to-t from-rose-200 via-pink-200 to-purple-200'
+                return 'fixed! top-0 left-0 right-0 text-crexy-primary'
             default:
                 return 'bg-white/95 backdrop-blur-sm'
         }
     }
 
-    const [openMiniCart, setOpenMiniCart] = useState(false)
-    const [openLogin, setOpenLogin] = useState(false)
-    const [openSearch, setOpenSearch] = useState(false)
+    const { setOpenMiniCart, setOpenLogin, setOpenSearch } = useModalStore()
 
     return (
-        <div className={`relative w-full flex flex-row justify-between p-4 z-20 ${getVariantStyles()} ${className}`}>
+        <div className={`w-full max-w-full flex flex-row justify-between p-4 z-20 ${getVariantStyles()} ${className}`}>
             <div>
                 <Image alt="" src={Logo} width={100} height={100} />
             </div>
@@ -69,16 +65,14 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                 <NavigationMenu viewport={false}>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuLink className="w-[120px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
-                                <Link href="/">Trang chủ</Link>
-                            </NavigationMenuLink>
+                            <Link className="text-md hover:font-bold uppercase" href="/">Trang chủ</Link>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
-                                <Link href="/products">Sản phẩm</Link>
+                            <NavigationMenuTrigger className="w-[150px] text-md font-md bg-transparent hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:bg-transparent">
+                                <Link className="text-md font-md hover:font-bold uppercase" href="/products">Sản phẩm</Link>
                             </NavigationMenuTrigger>
-                            <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200 left-[-120px]">
-                                <div className="grid gap-2 w-[600px] md:grid-cols-2">
+                            <NavigationMenuContent className="bg-linear-to-t from-cyan-200 to-violet-200 left-[-120px] max-w-[90vw]">
+                                <div className="grid gap-2 w-[600px] max-w-[90vw] md:grid-cols-2">
                                     <div>
                                         <Image className="h-[400px] w-[300px] object-cover" src={productCategoryImage} alt="Crexy Logo" />
                                     </div>
@@ -95,15 +89,8 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuLink className="w-[150px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:hover:font-bold data-[state=open]:bg-transparent uppercase">
-                                <Link href="/collections">Bộ sưu tập</Link>
-                            </NavigationMenuLink>
+                            <Link className="text-md text-shadow hover:font-bold uppercase" href="/collections">Bộ sưu tập</Link>
                         </NavigationMenuItem>
-                        {/* <NavigationMenuItem>
-                            <NavigationMenuLink asChild className="w-[80px] bg-transparent text-crexy-primary font-semibold hover:font-bold hover:bg-transparent uppercase">
-                                <Link href="/blog">Blog</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem> */}
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
@@ -117,21 +104,21 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                                     onClick={() => setOpenSearch(true)}
                                     className="font-medium cursor-pointer"
                                 >
-                                    <Search className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
+                                    <Search style={{ width: "24px", height: "24px" }} />
                                 </Link>
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuLink asChild>
                                 <Link href="#" onClick={() => setOpenLogin(true)} className="font-medium">
-                                    <UserRound className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
+                                    <UserRound style={{ width: "24px", height: "24px" }} />
                                 </Link>
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuLink asChild>
                                 <Link href="#" onClick={() => setOpenMiniCart(true)} className="font-medium relative">
-                                    <ShoppingBag className="text-crexy-primary" style={{ width: "24px", height: "24px" }} />
+                                    <ShoppingBag style={{ width: "24px", height: "24px" }} />
                                     {totalQuantity > 0 && (
                                         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                                             {totalQuantity}
@@ -142,9 +129,6 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
-                <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
-                <AuthModal open={openLogin} onClose={() => setOpenLogin(false)} />
-                <SearchModal open={openSearch} onClose={() => setOpenSearch(false)} />
             </div>
         </div>
     )

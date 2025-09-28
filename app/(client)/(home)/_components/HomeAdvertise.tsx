@@ -14,7 +14,6 @@ export const HomeAdvertise: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>
-                <Image src={Logo} alt="Logo" className="w-20 h-20 absolute top-10 left-10" />
                 <motion.p className="text-crexy-secondary text-5xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
                     transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
                         opacity: 1,

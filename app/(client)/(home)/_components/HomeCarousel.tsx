@@ -21,14 +21,14 @@ export const HomeCarousel: React.FC = () => {
                 }),
                 Fade(),
             ]}>
-                <CarouselContent>
-                    <CarouselItem>
+                <CarouselContent className="w-full h-full m-0 p-0">
+                    <CarouselItem className="m-0 p-0">
                         <Image src={Slide2} alt="Background" className="object-fill h-[100vh] w-screen" />
                     </CarouselItem>
-                    <CarouselItem>
+                    <CarouselItem className="m-0 p-0">
                         <Image src={Slide3} alt="Background" className="object-fill h-[100vh] w-screen" />
                     </CarouselItem>
-                    <CarouselItem>
+                    <CarouselItem className="m-0 p-0">
                         <Image src={Slide1} alt="Background" className="object-fill h-[100vh] w-screen" />
                     </CarouselItem>
                 </CarouselContent>

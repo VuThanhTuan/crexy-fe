@@ -121,9 +121,19 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Prevent horizontal overflow for all elements */
+  * {
+    max-width: 100%;
+  }
+  /* Ensure images don't cause horizontal overflow */
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -132,6 +142,8 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Custom scrollbar styles for webkit browsers */
@@ -173,10 +185,4 @@ html, body {
 .smooth-scroll {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-}
-
-/* Products page specific styles to override global overflow hidden */
-.products-page {
-  height: 100vh;
-  overflow-y: auto;
 }

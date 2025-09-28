@@ -66,10 +66,7 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="products-page min-h-screen bg-gray-50">
-            {/* Header */}
-            <TopBar variant="solid" />
-            
+        <div className="bg-gray-50">
             {/* Category Filter */}
             <div className="bg-white py-8">
                 <div className="container mx-auto px-4">
@@ -119,9 +116,6 @@ export default function ProductsPage() {
                     </div>
                 </div>
             )}
-
-            {/* Footer */}
-            <Footer />
         </div>
     )
 }

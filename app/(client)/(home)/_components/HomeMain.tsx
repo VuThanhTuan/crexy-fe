@@ -1,6 +1,6 @@
-import { useParallax } from "@/hooks/use-parallax"
 import { HomeCarousel } from "./HomeCarousel"
 import { HomeTopContent } from "./HomeTopContent"
+import TopBar from "../../_components/top-bar"
 
 
 
@@ -11,6 +11,7 @@ export const HomeMain: React.FC = () => {
                 <HomeCarousel />
             </div>
             <HomeTopContent />
+            <TopBar variant="transparent" />
         </div>
     )
 }

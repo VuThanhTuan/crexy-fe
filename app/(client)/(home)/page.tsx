@@ -7,6 +7,7 @@ import { Footer } from "../_components/footer";
 import { ScrollSection } from "@/components/ScrollSection";
 import { HomeMain } from "./_components/HomeMain";
 import { useEffect, useRef } from "react";
+import TopBar from "../_components/top-bar";
 
 const HomePage: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -21,26 +22,26 @@ const HomePage: React.FC = () => {
 
         const scrollToSection = (index: number) => {
             if (isScrolling || index < 0 || index >= sections.length) return;
-            
+
             isScrolling = true;
             const targetSection = sections[index] as HTMLElement;
             const targetTop = targetSection.offsetTop;
-            
+
             // Custom smooth scroll with longer duration
             const startTop = container.scrollTop;
             const distance = targetTop - startTop;
             const duration = 1200; // 2 seconds - you can adjust this value
             const startTime = performance.now();
-            
+
             const animateScroll = (currentTime: number) => {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
+
                 // Easing function for smooth motion
                 const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                
+
                 container.scrollTop = startTop + (distance * easeOutCubic);
-                
+
                 if (progress < 1) {
                     requestAnimationFrame(animateScroll);
                 } else {
@@ -48,15 +49,15 @@ const HomePage: React.FC = () => {
                     currentSectionIndex = index;
                 }
             };
-            
+
             requestAnimationFrame(animateScroll);
         };
 
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault();
-            
+
             if (isScrolling) return;
-            
+
             if (e.deltaY > 0 && currentSectionIndex < sections.length - 1) {
                 // Scroll down to next section
                 scrollToSection(currentSectionIndex + 1);
@@ -69,7 +70,7 @@ const HomePage: React.FC = () => {
         // Handle keyboard navigation
         const handleKeyDown = (e: KeyboardEvent) => {
             if (isScrolling) return;
-            
+
             if (e.key === 'ArrowDown' && currentSectionIndex < sections.length - 1) {
                 e.preventDefault();
                 scrollToSection(currentSectionIndex + 1);
@@ -81,7 +82,7 @@ const HomePage: React.FC = () => {
 
         container.addEventListener('wheel', handleWheel, { passive: false });
         document.addEventListener('keydown', handleKeyDown);
-        
+
         return () => {
             container.removeEventListener('wheel', handleWheel);
             document.removeEventListener('keydown', handleKeyDown);
@@ -89,26 +90,24 @@ const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <div 
-            ref={scrollContainerRef}
-            className="h-screen overflow-y-scroll smooth-scroll"
-        >
-            <ScrollSection className="h-screen flex items-center justify-center">
-                <HomeMain />    
-            </ScrollSection>
-            <ScrollSection className="h-screen flex items-center justify-center">
+        <>
+            {/* <ScrollSection className="h-screen flex items-center justify-center">
+                <HomeMain />
+            </ScrollSection> */}
+            <HomeMain />
+            {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeAdvertise />
-            </ScrollSection>
-            <ScrollSection className="h-screen flex items-center justify-center">
+            </ScrollSection> */}
+            <HomeAdvertise />
+            {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeProducts />
-            </ScrollSection>
-            <ScrollSection className="h-screen flex items-center justify-center">
+            </ScrollSection> */}
+            <HomeProducts />
+            {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeLibrary />
-            </ScrollSection>
-            <ScrollSection className="flex items-center justify-center">
-                <Footer />
-            </ScrollSection>
-        </div>
+            </ScrollSection> */}
+            <HomeLibrary />
+        </>
     );
 }
 

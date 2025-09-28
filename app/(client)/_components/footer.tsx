@@ -2,8 +2,8 @@ import { Facebook, Linkedin, Youtube, Instagram, MapPin, Phone, Mail } from 'luc
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="w-full bg-linear-to-t from-violet-300 to-pink-200 py-12">
-            <div className="container mx-auto px-4 flex flex-row">
+        <footer className="w-full max-w-full bg-linear-to-t from-violet-300 to-pink-200 py-12 overflow-x-hidden">
+            <div className="container mx-auto px-4 flex flex-row max-w-full">
                 <div className="w-[50%]">
                     {/* Column 1: Creaxy Brand Information */}
                     <div className="md:col-span-1">
