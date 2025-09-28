@@ -20,7 +20,7 @@ export default function CheckoutPage() {
   const total = useMemo(() => subtotal + shippingFee, [subtotal])
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 pt-30">
       <TopBar variant="solid" />
 
       <div className="bg-white border-b">

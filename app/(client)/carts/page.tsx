@@ -21,7 +21,7 @@ export default function CartPage() {
   }, [setFromStorage])
 
   return (
-    <div className="bg-gray-50 min-h-screen overflow-y-auto">
+    <div className="bg-gray-50 pt-30">
       <TopBar variant="solid" />
 
       <div className="bg-white border-b">

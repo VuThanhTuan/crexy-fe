@@ -147,7 +147,7 @@ export default function CollectionDetailPage() {
 
     if (!collection) {
         return (
-            <div className="bg-gray-50 min-h-screen">
+            <div className="bg-gray-50 pt-30">
                 <TopBar variant="solid" />
                 <div className="container mx-auto px-4 py-20 text-center">
                     <h1 className="text-2xl font-bold text-crexy-secondary mb-4">Không tìm thấy bộ sưu tập</h1>
@@ -159,7 +159,7 @@ export default function CollectionDetailPage() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 pt-30">
             {/* Header */}
             <TopBar variant="solid" />
 

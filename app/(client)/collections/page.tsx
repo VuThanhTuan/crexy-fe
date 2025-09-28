@@ -79,7 +79,7 @@ export default function CollectionsPage() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 pt-30">
             {/* Header */}
             <TopBar variant="solid" />
 

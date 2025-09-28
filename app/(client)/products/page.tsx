@@ -66,7 +66,7 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="bg-gray-50">
+        <div className="bg-gray-50 pt-30">
             {/* Category Filter */}
             <div className="bg-white py-8">
                 <div className="container mx-auto px-4">
