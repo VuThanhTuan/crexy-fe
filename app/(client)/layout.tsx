@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import { MiniCart } from "@/components/MiniCart";
 import { AuthModal } from "@/components/AuthModal";
 import { SearchModal } from "@/components/SearchModal";
+import { MenuModal } from "@/components/MenuModal";
 import { useModalStore } from "@/hooks/use-modal-store";
 
 
 const ClientRootLayout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
     const isHomePage = pathname === "/";
-    const { openMiniCart, openLogin, openSearch, setOpenMiniCart, setOpenLogin, setOpenSearch } = useModalStore();
+    const { openMiniCart, openLogin, openSearch, openMenu, setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu } = useModalStore();
 
     return (
         <div className="w-full min-h-screen overflow-x-hidden">
@@ -25,6 +26,7 @@ const ClientRootLayout = ({ children }: { children: React.ReactNode }) => {
             <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
             <AuthModal open={openLogin} onClose={() => setOpenLogin(false)} />
             <SearchModal open={openSearch} onClose={() => setOpenSearch(false)} />
+            <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
         </div>
     );
 }

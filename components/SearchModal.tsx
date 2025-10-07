@@ -10,8 +10,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import Image from "next/image"
-import Logo from "@/public/images/CrexyLogo.png"
 
 type SearchModalProps = {
     open: boolean
@@ -55,10 +53,6 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
                             className="pl-9 pr-4 py-2 text-md"
                             autoFocus
                         />
-                    </div>
-
-                    <div className="flex text-5xl font-bold justify-center uppercase bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
-                        Crexy
                     </div>
 
                     <div className="text-xl pt-[20px] pb-[20px] text-center bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
