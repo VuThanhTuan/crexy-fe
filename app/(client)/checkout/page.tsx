@@ -20,8 +20,8 @@ export default function CheckoutPage() {
   const total = useMemo(() => subtotal + shippingFee, [subtotal])
 
   return (
-    <div className="bg-gray-50 pt-30">
-      <TopBar variant="solid" />
+    <div className="bg-gray-50 pt-20">
+      <TopBar />
 
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-4">

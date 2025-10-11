@@ -10,7 +10,7 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
-import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 
 interface TopBarProps {
@@ -18,28 +18,52 @@ interface TopBarProps {
     className?: string
 }
 
-const   TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
-
-    const pathname = usePathname();
-    const isHomePage = pathname === "/"
-
+const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) => {
+    const [currentVariant, setCurrentVariant] = useState(variant);
+    
     const totalQuantity = useCartStore(s => s.totalQuantity());
 
     const getVariantStyles = () => {
-        switch (variant) {
+        switch (currentVariant) {
             case 'transparent':
                 return 'text-white bg-transparent fixed top-0 left-0 right-0'
-            case 'solid':
-                return 'fixed top-0 left-0 right-0 text-crexy-primary bg-white/95 backdrop-blur-sm'
+
             default:
                 return 'fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm'
         }
     }
 
+    useEffect(() => {
+        // Chỉ áp dụng logic scroll khi variant ban đầu là 'transparent'
+        if (variant !== 'transparent') {
+            return;
+        }
+
+        const handleScroll = () => {
+            const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
+            
+            if (scrollTop > 0) {
+                // Khi scroll xuống, đổi sang 'default'
+                setCurrentVariant('default');
+            } else {
+                // Khi ở top hoặc không scroll, quay lại 'transparent'
+                setCurrentVariant('transparent');
+            }
+        }
+
+        document.body.addEventListener('scroll', handleScroll);
+        return () => document.body.removeEventListener('scroll', handleScroll);
+    }, [variant]);
+
     const { setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu } = useModalStore();
 
     const getIconColor = () => {
-        return isHomePage ? 'text-white' : 'text-crexy-primary'
+        return currentVariant === 'transparent' ? 'text-white' : 'text-crexy-primary'
+    }
+
+    const getLogoClassName = () => {
+        const baseClassName = 'text-5xl font-bold text-shadow-3xs'
+        return currentVariant === 'transparent' ? baseClassName : `${baseClassName} bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent`
     }
 
     return (
@@ -47,12 +71,12 @@ const   TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }
             <div className="flex flex-row items-center gap-2">
                 <button onClick={() => setOpenMenu(true)} className="flex items-center gap-2">
                     <Menu className={`cursor-pointer ${getIconColor()}`} style={{ width: "36px", height: "36px" }} />
-                    <span className="text-md font-bold">Menu</span>
+                    <span className="text-md font-bold uppercase">Menu</span>
                 </button>
             </div>
-            <div className="text-5xl font-bold text-shadow-3xs">
+            <Link href="/" className={getLogoClassName()}>
                 CREXY
-            </div>
+            </Link>
 
             <div>
                 <NavigationMenu viewport={false}>

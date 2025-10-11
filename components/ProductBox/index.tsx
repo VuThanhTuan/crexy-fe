@@ -78,14 +78,11 @@ export const ProductBox = ({
             </div>
 
             <div className="flex h-[22%] w-full flex-col items-center justify-between bg-white px-5 pb-5 pt-4 text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-500">
-                    {collectionName}
-                </p>
-                <h3 className="mt-1 line-clamp-2 max-w-[90%] text-xl font-extrabold leading-tight text-crexy-secondary">
+                <h3 className="mt-1 max-w-[90%] text-xl font-extrabold leading-tight text-crexy-secondary">
                     {name}
                 </h3>
 
-                <div className="mt-2 flex w-full items-center justify-between px-2">
+                <div className="mt-2 flex w-full items-center justify-left gap-2 px-2">
                     {hasDiscount ? (
                         <>
                             <span className="text-base font-extrabold text-crexy-secondary">

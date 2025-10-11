@@ -20,8 +20,14 @@ interface MenuItem {
 
 const menuData: MenuItem[] = [
   {
+    id: "home",
+    title: "Trang chủ",
+    href: "/"
+  },
+  {
     id: "products",
     title: "Danh mục sản phẩm",
+    href: "/products",
     children: [
       { id: "sleepwear", title: "Đồ ngủ", href: "/products/sleepwear" },
       { id: "homewear", title: "Đồ mặc ở nhà", href: "/products/homewear" },
@@ -31,6 +37,7 @@ const menuData: MenuItem[] = [
   {
     id: "collections",
     title: "Bộ sưu tập",
+    href: "/collections",
     children: [
       { id: "collection1", title: "Bộ sưu tập 1", href: "/collections/collection-1" },
       { id: "collection2", title: "Bộ sưu tập 2", href: "/collections/collection-2" },
@@ -90,7 +97,9 @@ export const MenuModal = ({ open, onClose }: MenuModalProps) => {
                   <div key={item.id}>
                     {/* Main category */}
                     <div className="py-3">
-                      <span className="text-base font-semibold text-gray-900">{item.title}</span>
+                      <Link href={item.href || "#"} onClick={onClose} className="block w-full py-2 text-left hover:bg-gray-50 transition-colors">
+                        <span className="text-base font-semibold text-gray-900">{item.title}</span>
+                      </Link>
                     </div>
                     
                     {/* Subcategories */}

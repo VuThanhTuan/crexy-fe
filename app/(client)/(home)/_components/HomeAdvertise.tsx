@@ -14,7 +14,7 @@ export const HomeAdvertise: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>
-                <motion.p className="text-crexy-secondary text-5xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
+                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
                     transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
                         opacity: 1,
                     }} >
@@ -22,7 +22,7 @@ export const HomeAdvertise: React.FC = () => {
                     <br />
                     Opening
                 </motion.p>
-                <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
+                <motion.div className="uppercase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
                     transition={{
                         duration: 0.5,
                         delay: 0.5,
@@ -41,13 +41,13 @@ export const HomeAdvertise: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>
-                <motion.p className="text-crexy-secondary text-5xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
+                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
                     transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
                         opacity: 1,
                     }} >
                     Finding  <br /> your style
                 </motion.p>
-                <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
+                <motion.div className="uppercase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
                     transition={{
                         duration: 0.5,
                         delay: 0.5,

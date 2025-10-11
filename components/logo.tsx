@@ -1,4 +1,4 @@
-import darkLogo from "@/assets/logos/dark.svg";
+// import darkLogo from "@/assets/logos/dark.svg";
 // import logo from "@/assets/logos/main.svg";
 import Image from "next/image";
 import logo from "@/public/images/CrexyLogo.png" // Adjust the path to your logo image
@@ -14,14 +14,14 @@ export function Logo() {
         width={100} height={100}
       />
 
-      <Image
+      {/* <Image
         src={darkLogo}
         fill
         className="hidden dark:block"
         alt="NextAdmin logo"
         role="presentation"
         quality={100}
-      />
+      /> */}
     </div>
   );
 }

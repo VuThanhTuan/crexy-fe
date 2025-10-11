@@ -19,6 +19,7 @@ import Autoplay from "embla-carousel-autoplay"
 import Bg from "@/public/images/Bg5.jpg";
 import { HomeBox } from "../../_components/home-box";
 import { motion } from "framer-motion";
+import Slide2 from "@/public/images/dreamina-studio.jpeg"
 
 
 export const HomeLibrary: React.FC = () => {
@@ -46,7 +47,7 @@ export const HomeLibrary: React.FC = () => {
                 </Carousel>
             </div>
             <div id="home-library-information" className="w-full h-[50%] flex justify-center items-center"
-                style={{ backgroundImage: `url(${Bg.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                style={{ backgroundImage: `url(${Slide2.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <motion.div initial={{ opacity: 0, scale: 0.5 }}
                     transition={{
                         duration: 0.5,
