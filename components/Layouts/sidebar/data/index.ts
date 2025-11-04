@@ -27,30 +27,64 @@ export const NAV_DATA = [
         items: [],
       },
       {
-        title: "Forms",
+        title: "Sản phầm",
         icon: Icons.Alphabet,
         items: [
           {
-            title: "Form Elements",
-            url: "/forms/form-elements",
+            title: "Quản lý sản phẩm",
+            url: "/admin/products",
           },
           {
-            title: "Form Layout",
-            url: "/forms/form-layout",
+            title: "Quản lý danh mục",
+            url: "/admin/category",
+          },
+          {
+            title: "Quản lý size sản phẩm",
+            url: "/admin/product-sizes",
+          },
+          {
+            title: "Quản lý màu sắc",
+            url: "/admin/product-colors",
           },
         ],
       },
       {
-        title: "Tables",
-        url: "/tables",
+        title: "Khuyến mãi",
+        url: "/admin/discounts",
         icon: Icons.Table,
-        items: [
-          {
-            title: "Tables",
-            url: "/tables",
-          },
-        ],
+        items: [],
       },
+      {
+        title: "Media",
+        url: "/admin/media",
+        icon: Icons.Table,
+        items: [],
+      },
+      // {
+      //   title: "Forms",
+      //   icon: Icons.Alphabet,
+      //   items: [
+      //     {
+      //       title: "Form Elements",
+      //       url: "/forms/form-elements",
+      //     },
+      //     {
+      //       title: "Form Layout",
+      //       url: "/forms/form-layout",
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: "Tables",
+      //   url: "/tables",
+      //   icon: Icons.Table,
+      //   items: [
+      //     {
+      //       title: "Tables",
+      //       url: "/tables",
+      //     },
+      //   ],
+      // },
       {
         title: "Pages",
         icon: Icons.Alphabet,

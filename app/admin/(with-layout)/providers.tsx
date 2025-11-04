@@ -2,11 +2,19 @@
 
 import { SidebarProvider } from "@/components/Layouts/sidebar/sidebar-context";
 import { ThemeProvider } from "next-themes";
+import { AdminAuthProvider } from "./admin-auth";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider defaultTheme="light" attribute="class">
-      <SidebarProvider>{children}</SidebarProvider>
+    <ThemeProvider 
+      defaultTheme="light" 
+      attribute="class"
+      enableSystem={false}
+      disableTransitionOnChange
+    >
+      <AdminAuthProvider>
+        <SidebarProvider>{children}</SidebarProvider>
+      </AdminAuthProvider>
     </ThemeProvider>
   );
 }

@@ -47,6 +47,26 @@
   --color-crexy-primary: #32062C;
   --color-crexy-secondary: #771669;
   --color-crexy-tertiary: #FFF7F7;
+  /* Admin theme colors (Tailwind v4 tokens) */
+  --color-dark: #111928;
+  --color-dark-2: #1F2A37;
+  --color-dark-3: #374151;
+  --color-dark-4: #4B5563;
+  --color-dark-5: #6B7280;
+  --color-dark-6: #9CA3AF;
+  --color-dark-7: #D1D5DB;
+  --color-dark-8: #E5E7EB;
+  --color-gray: #EFF4FB;
+  --color-gray-dark: #122031;
+  --color-gray-1: #F9FAFB;
+  --color-gray-2: #F3F4F6;
+  --color-gray-3: #E5E7EB;
+  --color-gray-4: #D1D5DB;
+  --color-gray-5: #9CA3AF;
+  --color-gray-6: #6B7280;
+  --color-gray-7: #374151;
+  --color-stroke: #E6EBF1;
+  --color-stroke-dark: #27303E;
 }
 
 :root {
