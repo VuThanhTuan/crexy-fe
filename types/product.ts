@@ -5,6 +5,7 @@ export interface ProductVariant {
   isActive: boolean;
   productSizeId?: string;
   productColorId?: string;
+  price: number;
   productSize?: {
     id: string;
     name: string;
@@ -39,6 +40,14 @@ export interface ProductMedia {
   updatedAt: Date;
 }
 
+export interface ProductAttribute {
+  id: string;
+  name: string;
+  value: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -46,6 +55,7 @@ export interface Product {
   isActive: boolean;
   categoryId: string;
   discountId?: string;
+  price: number;
   createdAt: Date;
   updatedAt: Date;
   category?: {
@@ -61,6 +71,7 @@ export interface Product {
   };
   productVariants?: ProductVariant[];
   productMedia?: ProductMedia[];
+  productAttributes?: ProductAttribute[];
   primaryImage?: {
     id: string;
     name: string;
@@ -80,6 +91,7 @@ export interface CreateProductDto {
   isActive?: boolean;
   categoryId: string;
   discountId?: string | null;
+  price: number;
   mediaItems: {
     mediaId: string;
     mediaCategory: string;
@@ -88,6 +100,11 @@ export interface CreateProductDto {
     sizeId: string;
     colorId: string;
     isActive: boolean;
+    price: number;
+  }[];
+  productAttributes?: {
+    name: string;
+    value: string;
   }[];
 }
 
@@ -97,6 +114,7 @@ export interface UpdateProductDto {
   isActive?: boolean;
   categoryId?: string;
   discountId?: string | null;
+  price?: number;
   mediaItems?: {
     mediaId: string;
     mediaCategory: string;
@@ -105,6 +123,11 @@ export interface UpdateProductDto {
     sizeId: string;
     colorId: string;
     isActive: boolean;
+    price: number;
+  }[];
+  productAttributes?: {
+    name: string;
+    value: string;
   }[];
 }
 

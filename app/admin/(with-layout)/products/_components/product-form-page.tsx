@@ -37,6 +37,9 @@ const productSchema = z.object({
   isActive: z.boolean().optional(),
   categoryId: z.string().min(1, "Vui lòng chọn danh mục"),
   discountId: z.string().optional(),
+  price: z
+    .number("Giá phải là số")
+    .min(0, "Giá phải lớn hơn hoặc bằng 0"),
 });
 
 type ProductFormValues = z.infer<typeof productSchema>;
@@ -49,6 +52,7 @@ interface ProductFormPageProps {
     isActive?: boolean;
     categoryId: string;
     discountId?: string | null;
+    price: number;
     mediaItems: {
       mediaId: string;
       mediaCategory: string;
@@ -57,6 +61,11 @@ interface ProductFormPageProps {
       sizeId: string;
       colorId: string;
       isActive: boolean;
+      price: number;
+    }[];
+    productAttributes?: {
+      name: string;
+      value: string;
     }[];
   }) => Promise<void>;
   onCancel: () => void;
@@ -88,7 +97,8 @@ export default function ProductFormPage({
   const [loadingColors, setLoadingColors] = useState(true);
   const [discounts, setDiscounts] = useState<Discount[]>([]);
   const [loadingDiscounts, setLoadingDiscounts] = useState(true);
-  const [variants, setVariants] = useState<Array<{ sizeId: string; colorId: string; isActive: boolean; id?: string }>>([]);
+  const [variants, setVariants] = useState<Array<{ sizeId: string; colorId: string; isActive: boolean; price: number; id?: string }>>([]);
+  const [attributes, setAttributes] = useState<Array<{ name: string; value: string; id?: string }>>([]);
   const [description, setDescription] = useState(initialData?.description || "");
 
   // Media states
@@ -102,6 +112,17 @@ export default function ProductFormPage({
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
   const [currentPickerTarget, setCurrentPickerTarget] = useState<MediaPickerTarget | null>(null);
 
+  // Attribute modal state
+  const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false);
+  const [editingAttributeIndex, setEditingAttributeIndex] = useState<number | null>(null);
+  const [attributeFormData, setAttributeFormData] = useState<{
+    name: string;
+    value: string;
+  }>({
+    name: "",
+    value: "",
+  });
+
   // Variant modal state
   const [isVariantModalOpen, setIsVariantModalOpen] = useState(false);
   const [editingVariantIndex, setEditingVariantIndex] = useState<number | null>(null);
@@ -109,10 +130,12 @@ export default function ProductFormPage({
     sizeId: string;
     colorId: string;
     isActive: boolean;
+    price: number;
   }>({
     sizeId: "",
     colorId: "",
     isActive: true,
+    price: 0,
   });
 
   const {
@@ -128,6 +151,7 @@ export default function ProductFormPage({
       isActive: initialData?.isActive ?? true,
       categoryId: initialData?.categoryId || "",
       discountId: initialData?.discountId || "",
+      price: initialData?.price ?? 0,
     },
   });
 
@@ -162,6 +186,18 @@ export default function ProductFormPage({
     }
   }, [initialData]);
 
+  // Load initial attributes if editing
+  useEffect(() => {
+    if (initialData?.productAttributes && initialData.productAttributes.length > 0) {
+      const initialAttributes = initialData.productAttributes.map((attribute) => ({
+        name: attribute.name,
+        value: attribute.value,
+        id: attribute.id,
+      }));
+      setAttributes(initialAttributes);
+    }
+  }, [initialData]);
+
   // Load initial variants if editing
   useEffect(() => {
     if (initialData?.productVariants && initialData.productVariants.length > 0) {
@@ -169,6 +205,7 @@ export default function ProductFormPage({
         sizeId: variant.productSizeId || "",
         colorId: variant.productColorId || "",
         isActive: variant.isActive,
+        price: variant.price ?? 0,
         id: variant.id,
       }));
       setVariants(initialVariants);
@@ -248,6 +285,7 @@ export default function ProductFormPage({
         isActive: initialData.isActive ?? true,
         categoryId: initialData.categoryId || "",
         discountId: initialData.discountId || "",
+        price: initialData.price ?? 0,
       });
       setDescription(initialData.description || "");
     }
@@ -293,6 +331,78 @@ export default function ProductFormPage({
     }
   };
 
+  // Handle attribute modal
+  const handleOpenAttributeModal = (index?: number) => {
+    if (index !== undefined) {
+      // Edit mode
+      const attribute = attributes[index];
+      setEditingAttributeIndex(index);
+      setAttributeFormData({
+        name: attribute.name,
+        value: attribute.value,
+      });
+    } else {
+      // Add mode
+      setEditingAttributeIndex(null);
+      setAttributeFormData({
+        name: "",
+        value: "",
+      });
+    }
+    setIsAttributeModalOpen(true);
+  };
+
+  const handleCloseAttributeModal = () => {
+    setIsAttributeModalOpen(false);
+    setEditingAttributeIndex(null);
+    setAttributeFormData({
+      name: "",
+      value: "",
+    });
+  };
+
+  const handleSaveAttribute = () => {
+    if (!attributeFormData.name.trim() || !attributeFormData.value.trim()) {
+      alert("Vui lòng nhập đầy đủ tên và giá trị thuộc tính");
+      return;
+    }
+
+    // Check for duplicate attribute (same name + value)
+    const isDuplicate = attributes.some((attribute, index) => {
+      if (editingAttributeIndex !== null && index === editingAttributeIndex) {
+        return false; // Skip the attribute being edited
+      }
+      return attribute.name === attributeFormData.name && attribute.value === attributeFormData.value;
+    });
+
+    if (isDuplicate) {
+      alert("Thuộc tính với tên và giá trị này đã tồn tại");
+      return;
+    }
+
+    if (editingAttributeIndex !== null) {
+      // Update existing attribute
+      const newAttributes = [...attributes];
+      newAttributes[editingAttributeIndex] = {
+        ...newAttributes[editingAttributeIndex],
+        ...attributeFormData,
+      };
+      setAttributes(newAttributes);
+    } else {
+      // Add new attribute
+      setAttributes([...attributes, attributeFormData]);
+    }
+
+    handleCloseAttributeModal();
+  };
+
+  const handleDeleteAttribute = (index: number) => {
+    if (confirm("Bạn có chắc chắn muốn xóa thuộc tính này?")) {
+      const newAttributes = attributes.filter((_, i) => i !== index);
+      setAttributes(newAttributes);
+    }
+  };
+
   // Handle variant modal
   const handleOpenVariantModal = (index?: number) => {
     if (index !== undefined) {
@@ -303,6 +413,7 @@ export default function ProductFormPage({
         sizeId: variant.sizeId,
         colorId: variant.colorId,
         isActive: variant.isActive,
+        price: variant.price ?? 0,
       });
     } else {
       // Add mode
@@ -311,6 +422,7 @@ export default function ProductFormPage({
         sizeId: "",
         colorId: "",
         isActive: true,
+        price: 0,
       });
     }
     setIsVariantModalOpen(true);
@@ -323,12 +435,18 @@ export default function ProductFormPage({
       sizeId: "",
       colorId: "",
       isActive: true,
+      price: 0,
     });
   };
 
   const handleSaveVariant = () => {
     if (!variantFormData.sizeId || !variantFormData.colorId) {
       alert("Vui lòng chọn đầy đủ kích thước và màu sắc");
+      return;
+    }
+
+    if (variantFormData.price < 0) {
+      alert("Giá variant phải lớn hơn hoặc bằng 0");
       return;
     }
 
@@ -412,7 +530,16 @@ export default function ProductFormPage({
       sizeId: v.sizeId,
       colorId: v.colorId,
       isActive: v.isActive,
+      price: v.price,
     }));
+
+    // Build attributes array from state
+    const submitAttributes = attributes.length > 0 
+      ? attributes.map((a) => ({
+          name: a.name,
+          value: a.value,
+        }))
+      : undefined;
 
     // Prepare submit data
     const submitData: {
@@ -421,16 +548,20 @@ export default function ProductFormPage({
       isActive?: boolean;
       categoryId: string;
       discountId?: string | null;
+      price: number;
       mediaItems: { mediaId: string; mediaCategory: string }[];
-      variants: { sizeId: string; colorId: string; isActive: boolean }[];
+      variants: { sizeId: string; colorId: string; isActive: boolean; price: number }[];
+      productAttributes?: { name: string; value: string }[];
     } = {
       name: data.name,
       description,
       isActive: data.isActive,
       categoryId: data.categoryId,
       discountId: data.discountId && data.discountId.trim() !== "" ? data.discountId : null,
+      price: Number(data.price) || 0,
       mediaItems,
       variants: submitVariants,
+      productAttributes: submitAttributes,
     };
 
     await onSubmit(submitData);
@@ -547,6 +678,34 @@ export default function ProductFormPage({
               )}
             </div>
 
+            {/* Giá sản phẩm */}
+            <div>
+              <label
+                htmlFor="price"
+                className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
+              >
+                Giá sản phẩm (VNĐ)
+                <span className="ml-1 select-none text-red">*</span>
+                <span className="ml-1 text-dark-6 text-xs">(Chỉ để hiển thị)</span>
+              </label>
+              <input
+                id="price"
+                type="number"
+                placeholder="Nhập giá sản phẩm"
+                min="0"
+                step="1"
+                {...register("price", {
+                  valueAsNumber: true,
+                  setValueAs: (value) => (value === "" ? 0 : Number(value)),
+                })}
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary dark:disabled:bg-dark"
+                disabled={isSubmitting}
+              />
+              {errors.price && (
+                <p className="mt-1 text-sm text-red">{errors.price.message}</p>
+              )}
+            </div>
+
             {/* Trạng thái */}
             <div>
               <label className="flex items-center gap-3 cursor-pointer">
@@ -622,6 +781,86 @@ export default function ProductFormPage({
             </div>
           </div>
 
+          {/* Product Attributes Management Section */}
+          <div className="space-y-5 pt-6 border-t border-stroke dark:border-dark-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-dark dark:text-white">
+                Thuộc tính sản phẩm
+              </h3>
+              <Button
+                type="button"
+                onClick={() => handleOpenAttributeModal()}
+                disabled={isSubmitting}
+                size="sm"
+              >
+                <PlusIcon className="w-4 h-4" />
+                Thêm thuộc tính
+              </Button>
+            </div>
+
+            {attributes.length === 0 ? (
+              <div className="text-center py-8 text-dark-6 dark:text-gray-400">
+                Chưa có thuộc tính nào. Nhấn &quot;Thêm thuộc tính&quot; để tạo thuộc tính đầu tiên.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b border-stroke dark:border-dark-3">
+                      <th className="text-left py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
+                        Tên thuộc tính
+                      </th>
+                      <th className="text-left py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
+                        Giá trị
+                      </th>
+                      <th className="text-right py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
+                        Thao tác
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attributes.map((attribute, index) => (
+                      <tr
+                        key={index}
+                        className="border-b border-stroke dark:border-dark-3 hover:bg-gray-2 dark:hover:bg-dark-2"
+                      >
+                        <td className="py-3 px-4 text-body-sm text-dark dark:text-white">
+                          {attribute.name}
+                        </td>
+                        <td className="py-3 px-4 text-body-sm text-dark dark:text-white">
+                          {attribute.value}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center justify-end gap-2">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleOpenAttributeModal(index)}
+                              disabled={isSubmitting}
+                            >
+                              <EditIcon className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteAttribute(index)}
+                              disabled={isSubmitting}
+                              className="text-red hover:text-red dark:text-red-400 dark:hover:text-red-300"
+                            >
+                              <TrashIcon className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
           {/* Variants Management Section */}
           <div className="space-y-5 pt-6 border-t border-stroke dark:border-dark-3">
             <div className="flex items-center justify-between">
@@ -653,6 +892,9 @@ export default function ProductFormPage({
                       </th>
                       <th className="text-left py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
                         Màu sắc
+                      </th>
+                      <th className="text-left py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
+                        Giá (VNĐ)
                       </th>
                       <th className="text-left py-3 px-4 text-body-sm font-medium text-dark dark:text-white">
                         Trạng thái
@@ -688,6 +930,9 @@ export default function ProductFormPage({
                             ) : (
                               <span className="text-body-sm text-dark dark:text-white">N/A</span>
                             )}
+                          </td>
+                          <td className="py-3 px-4 text-body-sm text-dark dark:text-white">
+                            {variant.price.toLocaleString("vi-VN")}
                           </td>
                           <td className="py-3 px-4">
                             <span
@@ -759,6 +1004,79 @@ export default function ProductFormPage({
         onSelect={handleMediaSelect}
         mediaType="image"
       />
+
+      {/* Attribute Modal */}
+      <Dialog open={isAttributeModalOpen} onOpenChange={(open) => !open && handleCloseAttributeModal()}>
+        <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-dark">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-dark dark:text-white">
+              {editingAttributeIndex !== null ? "Sửa thuộc tính" : "Thêm thuộc tính mới"}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-5 py-4">
+            {/* Tên thuộc tính */}
+            <div>
+              <label
+                htmlFor="attributeName"
+                className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
+              >
+                Tên thuộc tính
+                <span className="ml-1 select-none text-red">*</span>
+              </label>
+              <input
+                id="attributeName"
+                type="text"
+                placeholder="Ví dụ: Chất liệu, Xuất xứ, Thương hiệu"
+                required
+                value={attributeFormData.name}
+                onChange={(e) =>
+                  setAttributeFormData({ ...attributeFormData, name: e.target.value })
+                }
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary dark:disabled:bg-dark"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            {/* Giá trị thuộc tính */}
+            <div>
+              <label
+                htmlFor="attributeValue"
+                className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
+              >
+                Giá trị thuộc tính
+                <span className="ml-1 select-none text-red">*</span>
+              </label>
+              <input
+                id="attributeValue"
+                type="text"
+                placeholder="Ví dụ: Vải cotton, Việt Nam, Crexy"
+                required
+                value={attributeFormData.value}
+                onChange={(e) =>
+                  setAttributeFormData({ ...attributeFormData, value: e.target.value })
+                }
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary dark:disabled:bg-dark"
+                disabled={isSubmitting}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCloseAttributeModal}
+              disabled={isSubmitting}
+            >
+              Hủy
+            </Button>
+            <Button type="button" onClick={handleSaveAttribute} disabled={isSubmitting}>
+              {editingAttributeIndex !== null ? "Cập nhật" : "Tạo"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Variant Modal */}
       <Dialog open={isVariantModalOpen} onOpenChange={(open) => !open && handleCloseVariantModal()}>
@@ -838,6 +1156,35 @@ export default function ProductFormPage({
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Giá variant */}
+            <div>
+              <label
+                htmlFor="variantPrice"
+                className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
+              >
+                Giá variant (VNĐ)
+                <span className="ml-1 select-none text-red">*</span>
+                <span className="ml-1 text-dark-6 text-xs">(Giá để tính tiền)</span>
+              </label>
+              <input
+                id="variantPrice"
+                type="number"
+                placeholder="Nhập giá variant"
+                min="0"
+                step="1"
+                required
+                value={variantFormData.price ?? 0}
+                onChange={(e) =>
+                  setVariantFormData({
+                    ...variantFormData,
+                    price: e.target.value === "" ? 0 : Number(e.target.value),
+                  })
+                }
+                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary dark:disabled:bg-dark"
+                disabled={isSubmitting}
+              />
             </div>
 
             {/* Trạng thái */}
