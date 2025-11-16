@@ -10,6 +10,11 @@ function createBaseClient(): AxiosInstance {
   });
 }
 
+// Public client - no auth interceptors. Use for unauthenticated endpoints (login, oauth callback...)
+export function getPublicApi(): AxiosInstance {
+  return createBaseClient();
+}
+
 // ADMIN (CSR) — Pure JWT via localStorage
 export function getAdminApi(): AxiosInstance {
   const client = createBaseClient();
@@ -29,6 +34,36 @@ export function getAdminApi(): AxiosInstance {
       if (error?.response?.status === 401) {
         window.location.href = "/admin/auth/sign-in";
         return Promise.reject(error);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return client;
+}
+
+// CLIENT STORE FRONT — JWT from localStorage
+export function getClientApi(): AxiosInstance {
+  const client = createBaseClient();
+
+  client.interceptors.request.use((config) => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    if (token) {
+      config.headers = config.headers ?? {};
+      (config.headers as Record<string, string>).Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+
+  client.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === 401) {
+        // Clear tokens on unauthorized
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+        }
       }
       return Promise.reject(error);
     }

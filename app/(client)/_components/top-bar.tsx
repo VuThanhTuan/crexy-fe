@@ -11,6 +11,7 @@ import {
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { useEffect, useState } from "react"
+import { useAuth } from "../client-auth"
 
 
 interface TopBarProps {
@@ -22,6 +23,8 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
     const [currentVariant, setCurrentVariant] = useState(variant);
     
     const totalQuantity = useCartStore(s => s.totalQuantity());
+
+    const auth = useAuth();
 
     const getVariantStyles = () => {
         switch (currentVariant) {
@@ -55,7 +58,7 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
         return () => document.body.removeEventListener('scroll', handleScroll);
     }, [variant]);
 
-    const { setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu } = useModalStore();
+    const { setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu, setOpenUserMenu } = useModalStore();
 
     const getIconColor = () => {
         return currentVariant === 'transparent' ? 'text-white' : 'text-crexy-primary'
@@ -64,6 +67,16 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
     const getLogoClassName = () => {
         const baseClassName = 'text-5xl font-bold text-shadow-3xs'
         return currentVariant === 'transparent' ? baseClassName : `${baseClassName} bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent`
+    }
+
+    const handleUserIconClick = () => {
+        // if user is authenticated, open user menu
+        if (auth.isAuthenticated) {
+            setOpenUserMenu(true);
+            return;
+        }
+        // else open login modal
+        setOpenLogin(true);
     }
 
     return (
@@ -93,7 +106,7 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuLink asChild>
-                                <Link href="#" onClick={() => setOpenLogin(true)} className="font-medium">
+                                <Link href="#" onClick={() => handleUserIconClick()} className="font-medium">
                                     <UserRound className={getIconColor()} style={{ width: "24px", height: "24px" }} />
                                 </Link>
                             </NavigationMenuLink>

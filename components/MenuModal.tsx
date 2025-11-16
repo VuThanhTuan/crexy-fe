@@ -5,6 +5,8 @@ import { useClickOutside } from "@/hooks/use-click-outside"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
 import Link from "next/link"
+import { useCategoryStore } from "@/hooks/use-category-store"
+import { useCollectionStore } from "@/hooks/use-collection-store"
 
 type MenuModalProps = {
   open: boolean
@@ -18,38 +20,7 @@ interface MenuItem {
   children?: MenuItem[]
 }
 
-const menuData: MenuItem[] = [
-  {
-    id: "home",
-    title: "Trang chủ",
-    href: "/"
-  },
-  {
-    id: "products",
-    title: "Danh mục sản phẩm",
-    href: "/products",
-    children: [
-      { id: "sleepwear", title: "Đồ ngủ", href: "/products/sleepwear" },
-      { id: "homewear", title: "Đồ mặc ở nhà", href: "/products/homewear" },
-      { id: "swimwear", title: "Đồ bơi", href: "/products/swimwear" }
-    ]
-  },
-  {
-    id: "collections",
-    title: "Bộ sưu tập",
-    href: "/collections",
-    children: [
-      { id: "collection1", title: "Bộ sưu tập 1", href: "/collections/collection-1" },
-      { id: "collection2", title: "Bộ sưu tập 2", href: "/collections/collection-2" },
-      { id: "collection3", title: "Bộ sưu tập 3", href: "/collections/collection-3" }
-    ]
-  },
-  {
-    id: "about",
-    title: "Về chúng tôi",
-    href: "/about"
-  }
-]
+// Menu data is composed of static items plus dynamic categories fetched from the API
 
 export const MenuModal = ({ open, onClose }: MenuModalProps) => {
   useEffect(() => {
@@ -61,6 +32,58 @@ export const MenuModal = ({ open, onClose }: MenuModalProps) => {
   }, [onClose])
 
   const panelRef = useClickOutside<HTMLDivElement>(() => onClose())
+
+  // Categories store: fetch once and reuse
+  const categories = useCategoryStore((s) => s.categories)
+  const fetchCategories = useCategoryStore((s) => s.fetchCategories)
+
+  useEffect(() => {
+    fetchCategories()
+  }, [fetchCategories])
+
+  // Build products children from categories (top-level categories)
+  const productsChildren: MenuItem[] = (
+    categories || []
+  )
+    .filter((c) => !c.parentId)
+    .map((c) => ({
+      id: c.id,
+      title: c.name,
+      href: c.slug ? `/products/${c.slug}` : "/products",
+      children: c.children
+        ? c.children.map((ch) => ({
+            id: ch.id,
+            title: ch.name,
+            href: ch.slug ? `/products/${ch.slug}` : "/products",
+          }))
+        : undefined,
+    }))
+
+  // Collections for menu (top ~5) fetched and cached in store
+  const collections = useCollectionStore((s) => s.collections)
+  const fetchCollections = useCollectionStore((s) => s.fetchCollections)
+
+  useEffect(() => {
+    fetchCollections()
+  }, [fetchCollections])
+
+  const collectionsChildren: MenuItem[] = (collections || []).map((col) => ({
+    id: col.id,
+    title: col.name,
+    href: col.slug ? `/collections/${col.slug}` : '/collections',
+  }))
+
+  const menuData: MenuItem[] = [
+    { id: "home", title: "Trang chủ", href: "/" },
+    { id: "products", title: "Danh mục sản phẩm", href: "/products", children: productsChildren },
+    {
+      id: "collections",
+      title: "Bộ sưu tập",
+      href: "/collections",
+      children: collectionsChildren,
+    },
+    { id: "about", title: "Về chúng tôi", href: "/about" },
+  ]
 
   return (
     <AnimatePresence>

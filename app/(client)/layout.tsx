@@ -7,27 +7,32 @@ import { AuthModal } from "@/components/AuthModal";
 import { SearchModal } from "@/components/SearchModal";
 import { MenuModal } from "@/components/MenuModal";
 import { useModalStore } from "@/hooks/use-modal-store";
+import { AuthProvider } from "./client-auth";
+import { UserMenu } from "@/components/UserMenu";
 
 
 const ClientRootLayout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
     const isHomePage = pathname === "/";
-    const { openMiniCart, openLogin, openSearch, openMenu, setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu } = useModalStore();
+    const { openMiniCart, openLogin, openSearch, openMenu, openUserMenu, setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu, setOpenUserMenu } = useModalStore();
 
     return (
-        <div className="w-full min-h-screen overflow-x-hidden">
-            {!isHomePage && <TopBar />}
-            <div className="w-full h-auto relative">
-                {children}
+        <AuthProvider>
+            <div className="w-full min-h-screen overflow-x-hidden">
+                {!isHomePage && <TopBar />}
+                <div className="w-full h-auto relative">
+                    {children}
+                </div>
+                <Footer />
+
+                {/* Modals - positioned at the root level */}
+                <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
+                <AuthModal open={openLogin} onClose={() => setOpenLogin(false)} />
+                <SearchModal open={openSearch} onClose={() => setOpenSearch(false)} />
+                <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
+                <UserMenu open={openUserMenu} onClose={() => setOpenUserMenu(false)} />
             </div>
-            <Footer />
-            
-            {/* Modals - positioned at the root level */}
-            <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />
-            <AuthModal open={openLogin} onClose={() => setOpenLogin(false)} />
-            <SearchModal open={openSearch} onClose={() => setOpenSearch(false)} />
-            <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
-        </div>
+        </AuthProvider>
     );
 }
 
