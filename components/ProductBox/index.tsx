@@ -70,8 +70,16 @@ export const ProductBox = ({
                     sizes="(max-width: 768px) 340px, 360px"
                 />
 
+                {isHovered && (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 transition-opacity duration-200">
+                        <div className="rounded bg-white px-4 py-2 text-sm font-semibold text-crexy-secondary uppercase">
+                            Chi tiết
+                        </div>
+                    </div>
+                )}
+
                 {hasDiscount && (
-                    <div className="absolute left-0 top-0 bg-orange-500 px-3 py-1 text-xs font-extrabold text-white">
+                    <div className="absolute left-0 top-0 z-30 bg-orange-500 px-3 py-1 text-xs font-extrabold text-white">
                         -{discount}%
                     </div>
                 )}
@@ -82,20 +90,27 @@ export const ProductBox = ({
                     {name}
                 </h3>
 
-                <div className="mt-2 flex w-full items-center justify-left gap-2 px-2">
+                <h5 className="mt-1 max-w-[90%] text-xl font-extrabold leading-tight text-crexy-secondary">
+                    {collectionName}
+                </h5>
+
+                <div className="mt-2 w-full px-2">
                     {hasDiscount ? (
-                        <>
-                            <span className="text-base font-extrabold text-crexy-secondary">
-                                {formatCurrencyVND(discountedPrice as number)}
+                        <div className="grid grid-cols-3 items-center gap-2">
+                            <div />
+                            <span className="text-base font-extrabold text-crexy-secondary text-center">
+                                {formatCurrencyVND(discountedPrice as number)} VNĐ
                             </span>
-                            <span className="text-sm font-semibold text-gray-400 line-through">
-                                {formatCurrencyVND(price)}
+                            <span className="text-sm font-semibold text-gray-400 line-through text-right">
+                                {formatCurrencyVND(price)} VNĐ
                             </span>
-                        </>
+                        </div>
                     ) : (
-                        <span className="mx-auto text-base font-extrabold text-crexy-secondary">
-                            {formatCurrencyVND(price)}
-                        </span>
+                        <div className="flex justify-center">
+                            <span className="text-base font-extrabold text-crexy-secondary">
+                                {formatCurrencyVND(price)} VNĐ
+                            </span>
+                        </div>
                     )}
                 </div>
             </div>

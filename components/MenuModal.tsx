@@ -75,7 +75,7 @@ export const MenuModal = ({ open, onClose }: MenuModalProps) => {
 
   const menuData: MenuItem[] = [
     { id: "home", title: "Trang chủ", href: "/" },
-    { id: "products", title: "Danh mục sản phẩm", href: "/products", children: productsChildren },
+    { id: "products", title: "Tất cả sản phẩm", href: "/products", children: productsChildren },
     {
       id: "collections",
       title: "Bộ sưu tập",
