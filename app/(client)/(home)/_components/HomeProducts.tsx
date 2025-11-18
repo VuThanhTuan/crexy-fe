@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button"
 import { ProductBox, Product } from "@/components/ProductBox";
 import { useEffect } from "react"
 import useHomeProductsStore from "@/hooks/use-home-products-store"
+import { useRouter } from "next/navigation";
 
 // HomeProducts fetches top 4 latest products (cached in store)
 
 export const HomeProducts: React.FC = () => {
     const products = useHomeProductsStore((s) => s.products) as Product[]
     const fetchTopProducts = useHomeProductsStore((s) => s.fetchTopProducts)
+    const router = useRouter();
 
     useEffect(() => {
         fetchTopProducts(4)
@@ -24,7 +26,9 @@ export const HomeProducts: React.FC = () => {
                 ))}
             </div>
             <div id="home-product-button" className="z-11 h-[140px] flex justify-center items-center">
-                <Button variant="primary" size="xl">View All</Button>
+                <Button variant="primary" className="uppercase" size="xl" onClick={() => router.push('/products')}>
+                    View All
+                </Button>
             </div>
 
         </div>

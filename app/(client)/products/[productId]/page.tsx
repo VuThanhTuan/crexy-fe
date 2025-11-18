@@ -17,10 +17,11 @@ export default function ProductDetailPage() {
     
     // Find product by ID
     const product = sampleProducts.find(p => p.id === productId)
+    console.log('111111111111', product);
     
     if (!product) {
         return (
-            <div className="min-h-screen bg-gray-50 overflow-y-auto">
+            <div className="min-h-screen pt-30 bg-gray-50 overflow-y-auto">
                 <TopBar variant="solid" />
                 <div className="flex items-center justify-center">
                     <div className="text-center">
@@ -77,9 +78,6 @@ export default function ProductDetailPage() {
                     currentProductId={productId}
                 />
             </div>
-
-            {/* Footer */}
-            <Footer />
         </div>
     )
 }

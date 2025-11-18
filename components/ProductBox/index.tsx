@@ -27,7 +27,7 @@ export const ProductBox = ({
     width = "w-[340px]", 
     height = "h-[600px]" 
 }: ProductBoxProps) => {
-    const { name, price, image, collectionName, discount } = product;
+    const { name, price, image, discount } = product;
     const [isHovered, setIsHovered] = useState(false);
 
     const hasDiscount = typeof discount === "number" && discount > 0
@@ -48,7 +48,7 @@ export const ProductBox = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-            <div className="relative h-[78%] w-full">
+            <div className="relative h-[80%] w-full">
                 <Image
                     src={image}
                     alt={name}
@@ -85,30 +85,26 @@ export const ProductBox = ({
                 )}
             </div>
 
-            <div className="flex h-[22%] w-full flex-col items-center justify-between bg-white px-5 pb-5 pt-4 text-center">
-                <h3 className="mt-1 max-w-[90%] text-xl font-extrabold leading-tight text-crexy-secondary">
-                    {name}
-                </h3>
-
+            <div className="flex h-[20%] w-full flex-col items-center justify-between bg-white px-5 pb-5 pt-4 text-center">
                 <h5 className="mt-1 max-w-[90%] text-xl font-extrabold leading-tight text-crexy-secondary">
-                    {collectionName}
+                    {name}
                 </h5>
 
-                <div className="mt-2 w-full px-2">
+                <div className="w-full px-2">
                     {hasDiscount ? (
                         <div className="grid grid-cols-3 items-center gap-2">
                             <div />
                             <span className="text-base font-extrabold text-crexy-secondary text-center">
-                                {formatCurrencyVND(discountedPrice as number)} VNĐ
+                                {formatCurrencyVND(discountedPrice as number)}
                             </span>
                             <span className="text-sm font-semibold text-gray-400 line-through text-right">
-                                {formatCurrencyVND(price)} VNĐ
+                                {formatCurrencyVND(price)}
                             </span>
                         </div>
                     ) : (
                         <div className="flex justify-center">
                             <span className="text-base font-extrabold text-crexy-secondary">
-                                {formatCurrencyVND(price)} VNĐ
+                                {formatCurrencyVND(price)}
                             </span>
                         </div>
                     )}

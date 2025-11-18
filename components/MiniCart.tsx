@@ -87,8 +87,8 @@ export const MiniCart = ({ open, onClose }: MiniCartProps) => {
                 <span className="font-semibold">{formatCurrencyVND(subtotal)}</span>
               </div>
               <div className="space-y-2">
-                <Button onClick={() => { onClose(); router.push("/carts") }} className="w-full bg-gray-900 hover:bg-gray-800 text-white">View cart</Button>
-                <Button onClick={() => { onClose(); router.push("/checkout") }} disabled={items.length === 0} className="w-full" variant="secondary">Checkout</Button>
+                <Button onClick={() => { onClose(); router.push("/carts") }} className="w-full bg-gray-900 hover:bg-gray-800 text-white uppercase">Xem giỏ hàng</Button>
+                <Button onClick={() => { onClose(); router.push("/checkout") }} disabled={items.length === 0} className="w-full uppercase" variant="secondary">Thanh toán</Button>
               </div>
             </div>
           </motion.aside>

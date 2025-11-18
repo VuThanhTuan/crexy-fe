@@ -31,7 +31,7 @@ export const ProductImageGallery = ({
                 />
             </div>
 
-            {/* Thumbnail Carousel */}
+            {/* Carousel */}
             {images.length > 1 && (
                 <Carousel
                     opts={{
@@ -63,8 +63,8 @@ export const ProductImageGallery = ({
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="left-2" />
-                    <CarouselNext className="right-2" />
+                    <CarouselPrevious className="left-1" />
+                    <CarouselNext className="right-1" />
                 </Carousel>
             )}
         </div>

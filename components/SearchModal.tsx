@@ -23,7 +23,7 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         if (searchTerm.trim()) {
-            router.push(`/products?searchTerm=${encodeURIComponent(searchTerm.trim())}`)
+            router.push(`/products?search=${encodeURIComponent(searchTerm.trim())}`)
             onClose()
             setSearchTerm("")
         }

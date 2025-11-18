@@ -1,8 +1,8 @@
-import { HomeCarousel } from "./HomeCarousel"
+// import { HomeCarousel } from "./HomeCarousel"
 import { HomeTopContent } from "./HomeTopContent"
 import TopBar from "../../_components/top-bar"
-import Slide2 from "@/public/images/dreamina-1.png"
-import Image from "next/image"
+// import Slide2 from "@/public/images/dreamina-1.png"
+// import Image from "next/image"
 
 
 

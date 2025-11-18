@@ -1,8 +1,10 @@
-import TopBar from "../../_components/top-bar"
+// import TopBar from "../../_components/top-bar"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation";
 
 export const HomeTopContent: React.FC = () => {
+    const router = useRouter();
     return (
         <>
             <div id="home-top-content" className="w-full h-[100vh] relative">
@@ -20,7 +22,7 @@ export const HomeTopContent: React.FC = () => {
                         Khoác lên bạn sự sáng tạo và quyến rũ, tự tin và năng động.
                     </motion.h1>
                     <motion.div initial={{ scale: 0.5 }} transition={{ duration: 0.5 }} animate={{ scale: 1 }}>
-                        <Button className="mt-4 font-bold uppercase" variant="primary" size="xl">Mua ngay</Button>
+                        <Button onClick={() => router.push('/products')} className="mt-4 font-bold uppercase" variant="primary" size="xl">Mua ngay</Button>
                     </motion.div>
                 </div>
             </div>

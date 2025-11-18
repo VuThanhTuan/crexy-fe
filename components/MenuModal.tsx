@@ -49,12 +49,12 @@ export const MenuModal = ({ open, onClose }: MenuModalProps) => {
     .map((c) => ({
       id: c.id,
       title: c.name,
-      href: c.slug ? `/products/${c.slug}` : "/products",
+      href: c.slug ? `/products?category=${c.slug}` : "/products",
       children: c.children
         ? c.children.map((ch) => ({
             id: ch.id,
             title: ch.name,
-            href: ch.slug ? `/products/${ch.slug}` : "/products",
+            href: ch.slug ? `/products?category=${ch.slug}` : "/products",
           }))
         : undefined,
     }))
