@@ -65,8 +65,8 @@ const TopBar: React.FC<TopBarProps> = ({ variant = 'default', className = '' }) 
     }
 
     const getLogoClassName = () => {
-        const baseClassName = 'text-5xl font-bold text-shadow-3xs'
-        return currentVariant === 'transparent' ? baseClassName : `${baseClassName} bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent`
+        const baseClassName = 'text-5xl font-bold ';
+        return currentVariant === 'transparent' ? `${baseClassName} text-shadow-[_0_0_18px_pink]` : `${baseClassName} bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent`
     }
 
     const handleUserIconClick = () => {

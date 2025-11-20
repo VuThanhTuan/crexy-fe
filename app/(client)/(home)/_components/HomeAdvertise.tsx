@@ -1,20 +1,17 @@
-import Ad1 from "@/public/images/Ad1.jpg"
-import Ad2 from "@/public/images/Ad2.jpg"
-import Logo from "@/public/images/CrexyLogo.png"
-import Image from "next/image"
+import Ad1 from "@/public/images/red-panda.jpeg"
 import { InfoBox } from "@/components/InfoBox"
 import { motion } from "framer-motion"
 
 export const HomeAdvertise: React.FC = () => {
     return (
         <div id="home-advertise" className="w-full h-[100vh] relative flex flex-row">
-            <div id="home-advertise-left" className="w-[50%] h-full bg-crexy-primary p-8 relative" style={{
+            <div id="home-advertise-left" className="w-full h-full bg-crexy-primary p-8 relative" style={{
                 backgroundImage: `url(${Ad1.src})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>
-                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
+                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px] text-shadow-[_0_0_18px_pink]" initial={{ opacity: 0 }}
                     transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
                         opacity: 1,
                     }} >
@@ -35,7 +32,7 @@ export const HomeAdvertise: React.FC = () => {
                 </motion.div>
 
             </div>
-            <div id="home-advertise-right" className="w-[50%] h-full bg-crexy-primary p-8 relative" style={{
+            {/* <div id="home-advertise-right" className="w-[50%] h-full bg-crexy-primary p-8 relative" style={{
                 backgroundImage: `url(${Ad2.src})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
@@ -59,7 +56,7 @@ export const HomeAdvertise: React.FC = () => {
                     <InfoBox title="" description="Explore all our collections" buttonText="Shop Now" />
                 </motion.div>
 
-            </div>
+            </div> */}
         </div>
     )
 }

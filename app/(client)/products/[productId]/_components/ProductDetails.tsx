@@ -1,17 +1,20 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+type ProductAttribute = {
+    id: string
+    name: string
+    value: string
+}
+
 interface ProductDetailsProps {
+    attributes: ProductAttribute[]
     className?: string
 }
 
-export const ProductDetails = ({ className }: ProductDetailsProps) => {
-    const specifications = [
-        { label: "Danh mục", value: "Đồ ngủ" },
-        { label: "Phong cách", value: "Cute, Sexy" },
-        { label: "Xuất xứ", value: "Việt Nam" },
-        { label: "Phân loại", value: "Đồ ngủ" },
-        { label: "Chất liệu", value: "100% Cotton" },
-    ]
+export const ProductDetails = ({ attributes, className }: ProductDetailsProps) => {
+    if (!attributes || attributes.length === 0) {
+        return null
+    }
 
     return (
         <div className={className}>
@@ -24,13 +27,13 @@ export const ProductDetails = ({ className }: ProductDetailsProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {specifications.map((spec, index) => (
-                        <TableRow key={index}>
+                    {attributes.map((attr) => (
+                        <TableRow key={attr.id}>
                             <TableCell className="font-medium text-gray-600">
-                                {spec.label}
+                                {attr.name}
                             </TableCell>
                             <TableCell className="text-gray-900">
-                                {spec.value}
+                                {attr.value}
                             </TableCell>
                         </TableRow>
                     ))}

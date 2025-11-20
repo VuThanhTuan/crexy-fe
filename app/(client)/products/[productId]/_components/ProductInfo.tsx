@@ -1,46 +1,61 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useCartStore } from "@/hooks/use-cart-store"
 import { Button } from "@/components/ui/button"
 import { StarRating } from "@/components/StarRating"
 import { QuantitySelector } from "@/components/QuantitySelector"
-import { ColorSizeSelector } from "@/components/ColorSizeSelector"
+import { ColorSelector } from "./ColorSelector"
+import { SizeSelector } from "./SizeSelector"
 import { ShoppingCart, Heart } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+type VariantView = {
+    id: string
+    price: number
+    colorName?: string
+    sizeName?: string
+}
+
+export type ColorOption = { name: string; colorCode: string };
 interface ProductInfoProps {
     product: {
         id: string
         name: string
-        price: number
-        discount?: number
+        basePrice: number
+        discountPercent?: number
         description: string
         collectionName: string
     }
+    variants: VariantView[]
+    colors: ColorOption[]
+    sizes: string[]
     className?: string
 }
 
-export const ProductInfo = ({ product, className }: ProductInfoProps) => {
-    const [selectedColor, setSelectedColor] = useState("Xám")
-    const [selectedSize, setSelectedSize] = useState("M")
+export const ProductInfo = ({ product, variants, colors, sizes, className }: ProductInfoProps) => {
+    const [selectedColor, setSelectedColor] = useState(colors[0]?.name ?? "")
+    const [selectedSize, setSelectedSize] = useState(sizes[0] ?? "")
     const [quantity, setQuantity] = useState(1)
 
-    const hasDiscount = typeof product.discount === "number" && product.discount > 0
-    const discountedPrice = hasDiscount ? Math.round(product.price * (1 - (product.discount as number) / 100)) : null
+    const matchedVariant = useMemo(
+        () => variants.find(v => v.colorName === selectedColor && v.sizeName === selectedSize),
+        [variants, selectedColor, selectedSize]
+    )
+
+    const priceToShow = matchedVariant?.price ?? product.basePrice
+    const hasDiscount = typeof product.discountPercent === "number" && product.discountPercent > 0
+    const discountedPrice = hasDiscount ? Math.round(priceToShow * (1 - (product.discountPercent as number) / 100)) : null
 
     const formatCurrencyVND = (value: number) =>
         value.toLocaleString("vi-VN", { style: "currency", currency: "VND", maximumFractionDigits: 0 })
-
-    const colors = ["Xám", "Xanh", "Đỏ"]
-    const sizes = ["M", "L", "XL", "XXL"]
 
     const addItem = useCartStore(s => s.addItem)
     const handleAddToCart = () => {
         addItem({
             id: product.id,
             name: product.name,
-            price: hasDiscount ? (discountedPrice as number) : product.price,
+            price: hasDiscount ? (discountedPrice as number) : (priceToShow as number),
             image: "/images/List1.jpg",
             color: selectedColor,
             size: selectedSize,
@@ -49,7 +64,6 @@ export const ProductInfo = ({ product, className }: ProductInfoProps) => {
 
     const handleBuyNow = () => {
         handleAddToCart()
-        // Could navigate to /carts in a real flow
         window.location.href = "/carts"
     }
 
@@ -80,42 +94,44 @@ export const ProductInfo = ({ product, className }: ProductInfoProps) => {
                                 {formatCurrencyVND(discountedPrice as number)}
                             </span>
                             <span className="text-xl text-gray-400 line-through">
-                                {formatCurrencyVND(product.price)}
+                                {formatCurrencyVND(Number(priceToShow))}
                             </span>
                             <span className="bg-orange-500 text-white px-2 py-1 text-sm font-bold rounded">
-                                -{product.discount}%
+                                -{product.discountPercent}%
                             </span>
                         </>
                     ) : (
                         <span className="text-3xl font-bold text-crexy-primary">
-                            {formatCurrencyVND(product.price)}
+                            {formatCurrencyVND(priceToShow)}
                         </span>
                     )}
                 </div>
             </div>
 
             {/* Description */}
-            <div>
+            {/* <div>
                 <p className="text-gray-600 leading-relaxed">
                     {product.description}
                 </p>
-            </div>
+            </div> */}
 
             {/* Color Selection */}
-            <ColorSizeSelector
-                type="color"
-                options={colors}
-                selectedValue={selectedColor}
-                onValueChange={setSelectedColor}
-            />
+            {colors.length > 0 && (
+                <ColorSelector
+                    options={colors}
+                    selectedValue={selectedColor}
+                    onValueChange={setSelectedColor}
+                />
+            )}
 
             {/* Size Selection */}
-            <ColorSizeSelector
-                type="size"
-                options={sizes}
-                selectedValue={selectedSize}
-                onValueChange={setSelectedSize}
-            />
+            {sizes.length > 0 && (
+                <SizeSelector
+                    options={sizes}
+                    selectedValue={selectedSize}
+                    onValueChange={setSelectedSize}
+                />
+            )}
 
             {/* Quantity Selection */}
             <div className="space-y-3">
@@ -135,6 +151,7 @@ export const ProductInfo = ({ product, className }: ProductInfoProps) => {
                         onClick={handleAddToCart}
                         className="flex-1 bg-crexy-primary hover:bg-crexy-primary/90 text-white"
                         size="lg"
+                        disabled={!matchedVariant}
                     >
                         <ShoppingCart className="w-5 h-5 mr-2" />
                         Thêm vào giỏ
@@ -152,6 +169,7 @@ export const ProductInfo = ({ product, className }: ProductInfoProps) => {
                     onClick={handleBuyNow}
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                     size="lg"
+                    disabled={!matchedVariant}
                 >
                     Mua ngay
                 </Button>

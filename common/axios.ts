@@ -85,7 +85,8 @@ export async function getStoreApi(options?: { ssr?: boolean; headers?: Record<st
     try {
       // Lazy import to avoid client bundle bloat
       const { cookies } = await import("next/headers");
-      const cookieHeader = cookies().toString();
+      const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
 
       client.interceptors.request.use((config) => {
         config.headers = config.headers ?? {};

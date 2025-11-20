@@ -95,16 +95,16 @@ export const ProductBox = ({
                         <div className="grid grid-cols-3 items-center gap-2">
                             <div />
                             <span className="text-base font-extrabold text-crexy-secondary text-center">
-                                {formatCurrencyVND(discountedPrice as number)}
+                                {formatCurrencyVND(Number(discountedPrice))}
                             </span>
                             <span className="text-sm font-semibold text-gray-400 line-through text-right">
-                                {formatCurrencyVND(price)}
+                                {formatCurrencyVND(Number(price))}
                             </span>
                         </div>
                     ) : (
                         <div className="flex justify-center">
                             <span className="text-base font-extrabold text-crexy-secondary">
-                                {formatCurrencyVND(price)}
+                                {formatCurrencyVND(Number(price))}
                             </span>
                         </div>
                     )}
