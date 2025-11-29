@@ -1,35 +1,30 @@
 
 import { Button } from "@/components/ui/button"
-import { ProductBox, Product } from "@/components/ProductBox";
-import { useEffect } from "react"
-import useHomeProductsStore from "@/hooks/use-home-products-store"
 import { useRouter } from "next/navigation";
-
-// HomeProducts fetches top 4 latest products (cached in store)
-
+import { motion } from "framer-motion"
 export const HomeProducts: React.FC = () => {
-    const products = useHomeProductsStore((s) => s.products) as Product[]
-    const fetchTopProducts = useHomeProductsStore((s) => s.fetchTopProducts)
+
     const router = useRouter();
-
-    useEffect(() => {
-        fetchTopProducts(4)
-    }, [fetchTopProducts])
-
     return (
-        <div id="home-products" className="w-full h-[100vh] relative flex flex-col">
-            <div className="absolute top-0 left-0 w-full h-full bg-white opacity-50 z-10"></div>
-            <div id="home-product-title" className="z-11 text-crexy-secondary text-5xl w-full text-center p-[30px] uppercase">Featured Productions</div>
-            <div id="home-product-list" className="w-full z-11 flex-1 flex flex-row gap-2 pl-1 pr-1">
-                {products.map((product: Product) => (
-                    <ProductBox key={product.id} product={product} className="w-[470px] h-[650px]!" />
-                ))}
-            </div>
-            <div id="home-product-button" className="z-11 h-[140px] flex justify-center items-center">
-                <Button variant="primary" className="uppercase" size="xl" onClick={() => router.push('/products')}>
-                    View All
-                </Button>
-            </div>
+        <div id="home-products" className="w-full h-[100vh] relative flex flex-col relative">
+            <video src="/images/dreamina-video.mp4" autoPlay loop muted className="w-full h-full object-cover" />
+            {/* <Button variant="primary" className="uppercase absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 z-12" size="xl" onClick={() => router.push('/products')}>
+                View All
+            </Button> */}
+
+            <motion.p id="bst-name" className="uppercase text-[#566b54] font-extrabold text-6xl max-w-[1000px] text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0 }}
+                transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                }} >
+                Sống xanh cùng Crexy
+            </motion.p>
+            <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-24" initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 1, delay: 0.7, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                    y: 0
+                }}>
+                <Button id="explore-collections" onClick={() => router.push('/products')} className="font-bold uppercase" variant="primary" size="xl">Mua ngay</Button>
+            </motion.div>
 
         </div>
     )

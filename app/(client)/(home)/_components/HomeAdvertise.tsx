@@ -1,62 +1,40 @@
 import Ad1 from "@/public/images/red-panda.jpeg"
-import { InfoBox } from "@/components/InfoBox"
 import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
 export const HomeAdvertise: React.FC = () => {
+    const router = useRouter();
     return (
-        <div id="home-advertise" className="w-full h-[100vh] relative flex flex-row">
-            <div id="home-advertise-left" className="w-full h-full bg-crexy-primary p-8 relative" style={{
-                backgroundImage: `url(${Ad1.src})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center"
-            }}>
-                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px] text-shadow-[_0_0_18px_pink]" initial={{ opacity: 0 }}
-                    transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
-                        opacity: 1,
-                    }} >
-                    Grand
-                    <br />
-                    Opening
-                </motion.p>
-                <motion.div className="uppercase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.5,
-                        ease: [0, 0.71, 0.2, 1.01],
-                    }} whileInView={{
-                        opacity: 1,
-                        scale: 1,
-                    }} >
-                    <InfoBox title="New Collection" description="Our First Underware Collection" buttonText="Shop Now" />
-                </motion.div>
-
-            </div>
-            {/* <div id="home-advertise-right" className="w-[50%] h-full bg-crexy-primary p-8 relative" style={{
-                backgroundImage: `url(${Ad2.src})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center"
-            }}>
-                <motion.p className="uppercase text-crexy-secondary text-4xl w-full text-center mt-[120px]" initial={{ opacity: 0 }}
-                    transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
-                        opacity: 1,
-                    }} >
-                    Finding  <br /> your style
-                </motion.p>
-                <motion.div className="uppercase absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0, scale: 0.5 }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.5,
-                        ease: [0, 0.71, 0.2, 1.01],
-                    }} whileInView={{
-                        opacity: 1,
-                        scale: 1,
-                    }} >
-                    <InfoBox title="" description="Explore all our collections" buttonText="Shop Now" />
-                </motion.div>
-
-            </div> */}
+        <div id="home-advertise" className="w-full h-[100vh] relative flex flex-row" style={{
+            backgroundImage: `url(${Ad1.src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+        }}>
+            <motion.p id="bst-name" className="uppercase text-[#ac1a19] font-extrabold text-8xl max-w-[1000px] text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0 }}
+                transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                }} >
+                Mùa hè rực rỡ
+            </motion.p>
+            <motion.p id="bst" className="uppercase font-extrabold text-white text-3xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-22 -ml-[22rem]" initial={{ opacity: 0, x: -50 }}
+                transition={{ duration: 1, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                    x: 0
+                }}>BST</motion.p>
+            <motion.p id="brand" className="uppercase font-extrabold text-white text-3xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-22 ml-[22rem]" initial={{ opacity: 0, x: 50 }}
+                transition={{ duration: 1, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                    x: 0
+                }}>crexy</motion.p>
+            <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-24" initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 1, delay: 0.7, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
+                    opacity: 1,
+                    y: 0
+                }}>
+                <Button id="explore-collections" onClick={() => router.push('/collections')} className="font-bold uppercase" variant="primary" size="xl">Khám phá</Button>
+            </motion.div>
         </div>
     )
 }

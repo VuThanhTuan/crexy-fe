@@ -98,11 +98,12 @@ const HomePage: React.FC = () => {
             {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeAdvertise />
             </ScrollSection> */}
+            <HomeProducts />
             <HomeAdvertise />
             {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeProducts />
             </ScrollSection> */}
-            <HomeProducts />
+
             {/* <ScrollSection className="h-screen flex items-center justify-center">
                 <HomeLibrary />
             </ScrollSection> */}
