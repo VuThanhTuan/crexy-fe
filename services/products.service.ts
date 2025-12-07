@@ -15,6 +15,9 @@ export type RelatedProduct = {
   name: string;
   price: number;
   primaryImageUrl?: string;
+  secondaryImageUrl?: string;
+  discount?: { discountValue: number; discountType: string };
+  productVariants?: ProductVariant[];
 };
 
 export async function fetchRelatedProducts(categoryId: string, limit = 10, api?: AxiosInstance): Promise<RelatedProduct[]> {
@@ -22,12 +25,23 @@ export async function fetchRelatedProducts(categoryId: string, limit = 10, api?:
   const { data } = await client.get(`/products/top`, {
     params: { limit, categoryId },
   });
-  type RawProduct = { id: string; name: string; price: number; primaryImage?: { url?: string }; primaryImageUrl?: string };
+  type RawProduct = { 
+    id: string; 
+    name: string; 
+    price: number; 
+    primaryImage?: { url?: string }; 
+    secondaryImage?: { url?: string };
+    discount?: { discountValue: number; discountType: string };
+    productVariants?: ProductVariant[];
+  };
   return (data as RawProduct[]).map((p) => ({
     id: p.id,
     name: p.name,
     price: p.price,
-    primaryImageUrl: p?.primaryImage?.url ?? p?.primaryImageUrl,
+    primaryImageUrl: p?.primaryImage?.url ?? p?.secondaryImage?.url,
+    secondaryImageUrl: p?.secondaryImage?.url ?? p?.primaryImage?.url,
+    discount: p.discount,
+    productVariants: p.productVariants,
   }));
 }
 

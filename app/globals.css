@@ -48,6 +48,7 @@
   --color-crexy-secondary: #771669;
   --color-crexy-tertiary: #FFF7F7;
   --color-crexy-quaternary: #ac1a19;
+  --color-crexy-accent: #1d3959;
   /* Admin theme colors (Tailwind v4 tokens) */
   --color-dark: #111928;
   --color-dark-2: #1F2A37;
@@ -186,15 +187,47 @@ html, body {
 }
 
 /* Enhanced smooth scrolling */
-.smooth-scroll {
-  scroll-behavior: auto;
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Home page specific styles */
+#home-page-container {
+  overscroll-behavior: none;
+}
+
+/* Ensure all sections allow pointer events */
+section, div {
+  pointer-events: auto;
+}
+
+/* One-page scroll styles */
+.scroll-smooth {
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }
 
 /* Smooth transitions for scroll sections */
 .scroll-section {
   transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
+}
+
+/* Section snap styles */
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Prevent scroll bounce on sections */
+.snap-start {
+  scroll-snap-align: start;
 }
 
 /* Hover effects for scrollbar */

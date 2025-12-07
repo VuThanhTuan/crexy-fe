@@ -66,10 +66,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
         name: p.name,
         price: p.price,
         image: p.primaryImageUrl ?? "/images/List1.jpg",
-        behindImage: p.primaryImageUrl ?? "/images/List2.jpg",
+        behindImage: p.secondaryImageUrl ?? p.primaryImageUrl ?? "/images/List2.jpg",
         description: "",
         collectionName: product?.category?.name ?? "",
-        discount: undefined,
+        discount: p.discount?.discountValue,
+        productVariants: p.productVariants,
     }));
 
     return (

@@ -9,21 +9,24 @@ import { MenuModal } from "@/components/MenuModal";
 import { useModalStore } from "@/hooks/use-modal-store";
 import { AuthProvider } from "./client-auth";
 import { UserMenu } from "@/components/UserMenu";
+import { useMemo } from "react";
+import HomeTopBar from "./_components/home-top-bar";
 
 
 const ClientRootLayout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
-    const isHomePage = pathname === "/";
+    const isHomePageMemo = useMemo(() => pathname === "/", [pathname]);
     const { openMiniCart, openLogin, openSearch, openMenu, openUserMenu, setOpenMiniCart, setOpenLogin, setOpenSearch, setOpenMenu, setOpenUserMenu } = useModalStore();
-
     return (
         <AuthProvider>
             <div className="w-full min-h-screen overflow-x-hidden">
-                {!isHomePage && <TopBar />}
+                {/* TopBar with transparent variant only on homepage */}
+                {isHomePageMemo ? <HomeTopBar /> : <TopBar />}
                 <div className="w-full h-auto relative">
                     {children}
                 </div>
-                <Footer />
+                {/* Only show footer on non-home pages */}
+                {!isHomePageMemo && <Footer />}
 
                 {/* Modals - positioned at the root level */}
                 <MiniCart open={openMiniCart} onClose={() => setOpenMiniCart(false)} />

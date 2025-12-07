@@ -12,7 +12,7 @@ export const HomeProducts: React.FC = () => {
                 View All
             </Button> */}
 
-            <motion.p id="bst-name" className="uppercase text-[#566b54] font-extrabold text-6xl max-w-[1000px] text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0 }}
+            <motion.p id="bst-name" className="uppercase text-crexy-accent w-full font-bold lg:font-extrabold text-5xl md:text-5xl lg:text-6xl text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ opacity: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }} whileInView={{
                     opacity: 1,
                 }} >
@@ -23,7 +23,7 @@ export const HomeProducts: React.FC = () => {
                     opacity: 1,
                     y: 0
                 }}>
-                <Button id="explore-collections" onClick={() => router.push('/products')} className="font-bold uppercase" variant="primary" size="xl">Mua ngay</Button>
+                <Button id="explore-collections" onClick={() => router.push('/products')} className="font-bold uppercase text-crexy-accent border-crexy-accent" variant="primary" size="xl">Mua ngay</Button>
             </motion.div>
 
         </div>

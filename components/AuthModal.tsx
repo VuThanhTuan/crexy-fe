@@ -163,7 +163,7 @@ export const AuthModal = ({ open, onClose }: AuthModalProps) => {
             />
             <motion.aside
               ref={panelRef}
-              className="absolute right-0 top-0 h-full w-[400px] bg-white shadow-xl border-l flex flex-col"
+              className="absolute right-0 top-0 h-full w-full md:w-[400px] bg-white shadow-xl border-l flex flex-col"
               initial={{ x: 400 }}
               animate={{ x: 0 }}
               exit={{ x: 400 }}

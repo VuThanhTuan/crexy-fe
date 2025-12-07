@@ -6,7 +6,6 @@ import { useCategoryStore } from "@/hooks/use-category-store"
 import { SearchAndFilter } from "./_components/SearchAndFilter"
 import { ProductGrid } from "./_components/ProductGrid"
 import { Pagination } from "./_components/Pagination"
-import { ProductHero } from "./_components/ProductHero"
 import { getPublicApi } from "@/common/axios"
 import type { PaginatedProductResponse } from "@/types/product"
 import { Product } from "@/components/ProductBox"
@@ -60,6 +59,7 @@ export default function ProductsPage() {
                     params.search = searchQuery.trim()
                 }
                 const res = await client.get<PaginatedProductResponse>("/products", { params })
+                console.log('API Response:', res.data.data?.[0]); // Debug log
                 // Map API product to ProductBox type
                 const mapped = (res.data.data || []).map((p) => ({
                     id: p.id,
@@ -70,6 +70,7 @@ export default function ProductsPage() {
                     description: p.description || "",
                     collectionName: p.category?.name || "",
                     discount: p.discount?.discountValue || undefined,
+                    productVariants: p.productVariants,
                 } as Product))
                 setProducts(mapped)
                 setTotalPages(res.data.totalPages)
@@ -147,9 +148,9 @@ export default function ProductsPage() {
     ]
 
     return (
-        <div className="bg-gray-50 pt-20">
+        <div className="bg-gray-50 pt-14 md:pt-16 lg:pt-20">
             {/* Category Filter */}
-            <div className="bg-white py-8">
+            <div className="bg-white py-2 md:py-4 lg:py-8 pb-0">
                 <div className="container mx-auto px-4">
                     <CategoryFilter
                         categories={filterCategories}
@@ -159,18 +160,8 @@ export default function ProductsPage() {
                 </div>
             </div>
 
-            {/* Hero Section */}
-            <ProductHero
-                backgroundImage="/images/Creaxy-Bg2.jpeg"
-                title={
-                    activeCategory === "All" 
-                        ? "Tất cả sản phẩm" 
-                        : (categoriesData || []).find((c) => c.slug === activeCategory)?.name || activeCategory
-                }
-            />
-
             {/* Search and Filter */}
-            <div className="bg-white py-6 border-b">
+            <div className="bg-white py-2 md:py-4 lg:py-6 border-b">
                 <div className="container mx-auto px-4">
                     <SearchAndFilter
                         searchValue={searchInput}
@@ -181,10 +172,9 @@ export default function ProductsPage() {
             </div>
 
             {/* Products Grid */}
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto md:px-4 md:py-12">
                 <ProductGrid
                     products={products}
-                    columns={5}
                 />
                 {loading && (
                     <div className="text-center py-8 text-gray-500">Đang tải sản phẩm...</div>

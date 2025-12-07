@@ -5,26 +5,12 @@ import { cn } from "@/lib/utils"
 interface ProductGridProps {
     products: Product[]
     className?: string
-    columns?: 3 | 4 | 5
 }
 
 export const ProductGrid: React.FC<ProductGridProps> = ({
     products,
     className,
-    columns = 5
 }) => {
-    const getGridCols = () => {
-        switch (columns) {
-            case 3:
-                return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            case 4:
-                return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            case 5:
-                return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-            default:
-                return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-        }
-    }
 
     if (products.length === 0) {
         return (
@@ -37,13 +23,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     }
 
     return (
-        <div className={cn("grid gap-4", getGridCols(), className)}>
+        <div className={cn("grid md:gap-1 lg:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4", className)}>
             {products.map((product) => (
                 <ProductBox
                     key={product.id}
                     product={product}
                     width="w-[300px]"
-                    height="h-[500px]"
+                    height="h-[400px]"
+                    className="w-full h-[350px] md:h-[400px] lg:h-[500px]"
                 />
             ))}
         </div>

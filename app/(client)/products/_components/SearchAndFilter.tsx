@@ -48,7 +48,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                     onBlur={() => setIsFocused(false)}
                     placeholder={placeholder}
                     className={cn(
-                        "w-full pl-10 pr-4 py-3 border-2 rounded-lg transition-all duration-300 focus:outline-none",
+                        "w-full pl-8 lg:pl-10 pr-4 py-2 md:py-2 lg:py-3 border-2 rounded-lg transition-all duration-300 focus:outline-none",
                         isFocused 
                             ? "border-crexy-primary shadow-lg" 
                             : "border-gray-200 hover:border-gray-300"
@@ -62,7 +62,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 <HoverCard.Root openDelay={0} closeDelay={100}>
                     <HoverCard.Trigger asChild>
                         <button
-                            className="p-3 border-2 border-gray-200 rounded-lg hover:border-crexy-primary hover:text-crexy-primary transition-all duration-300"
+                            className="p-2 lg:p-3 border-2 border-gray-200 rounded-lg hover:border-crexy-primary hover:text-crexy-primary transition-all duration-300"
                             title="Sort"
                         >
                             <SortAscIcon className="w-5 h-5" />

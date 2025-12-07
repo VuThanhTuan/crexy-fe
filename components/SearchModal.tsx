@@ -37,7 +37,7 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="w-[900px]! max-w-[900px]! text-crexy-primary rounded-none!">
+            <DialogContent className="w-full lg:max-w-[900px]! text-crexy-primary rounded-none!">
                 <DialogHeader>
                     <DialogTitle className="text-center text-xl text-crexy-primary uppercase">Tìm kiếm sản phẩm</DialogTitle>
                 </DialogHeader>

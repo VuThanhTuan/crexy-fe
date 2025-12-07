@@ -49,7 +49,7 @@ export function UserMenu({ open, onClose }: UserMenuProps) {
           />
           <motion.aside
             ref={panelRef}
-            className="absolute right-0 top-0 h-full w-[350px] bg-white shadow-xl border-l flex flex-col"
+            className="absolute right-0 top-0 h-full w-full md:w-[400px] bg-white shadow-xl border-l flex flex-col"
             initial={{ x: 350 }}
             animate={{ x: 0 }}
             exit={{ x: 350 }}

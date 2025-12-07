@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Creaxy - The best place to buy clothes",
-  description: "Creaxy - The best place to buy clothes",
+  title: "CREAXY - THỜI TRANG NỮ HIỆN ĐẠI NĂNG ĐỘNG QUYẾN RŨ 2026",
+  description: "CREAXY - THỜI TRANG NỮ HIỆN ĐẠI NĂNG ĐỘNG QUYẾN RŨ 2026",
 };
 
 export default function RootLayout({

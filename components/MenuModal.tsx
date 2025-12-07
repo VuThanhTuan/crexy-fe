@@ -99,7 +99,7 @@ export const MenuModal = ({ open, onClose }: MenuModalProps) => {
           />
           <motion.aside
             ref={panelRef}
-            className="absolute left-0 top-0 h-full w-[360px] bg-white shadow-xl border-r flex flex-col"
+            className="absolute left-0 top-0 h-full w-full md:w-[400px] bg-white shadow-xl border-r flex flex-col"
             initial={{ x: -360 }}
             animate={{ x: 0 }}
             exit={{ x: -360 }}
