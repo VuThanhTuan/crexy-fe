@@ -24,9 +24,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
     return (
         <div className={cn("grid md:gap-1 lg:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4", className)}>
-            {products.map((product) => (
+            {products.map((product, index) => (
                 <ProductBox
-                    key={product.id}
+                    key={index}
                     product={product}
                     width="w-[300px]"
                     height="h-[400px]"

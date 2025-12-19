@@ -122,9 +122,9 @@ export const ProductBox = ({
                 <div className="flex px-2 h-[20%] w-full flex-col bg-white pt-1 pb-1 md:px-2 md:pb-2 md:pt-2 lg:px-5 lg:pb-5 lg:pt-4">
                     <div className="flex justify-between items-center mb-1">
                         <div className="pdb-colors flex gap-1">
-                            {uniqueColors.map(([colorId, colorCode]) => (
+                            {uniqueColors.map(([colorId, colorCode], index) => (
                                 <div
-                                    key={colorId}
+                                    key={`${product.id}-${colorId}-${index}`}
                                     className="w-4 h-4 md:w-5 md:h-5 rounded-full border border-gray-300"
                                     style={{ backgroundColor: colorCode }}
                                     title={colorCode}

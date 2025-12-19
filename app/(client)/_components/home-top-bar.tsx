@@ -34,7 +34,9 @@ const HomeTopBar: React.FC = () => {
                 <Link href="/about-us">
                     Về chúng tôi
                 </Link>
-
+                <Link href="/about-us">
+                    Social
+                </Link>
             </div>
 
 

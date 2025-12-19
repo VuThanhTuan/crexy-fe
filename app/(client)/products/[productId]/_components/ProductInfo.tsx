@@ -7,7 +7,7 @@ import { StarRating } from "@/components/StarRating"
 import { QuantitySelector } from "@/components/QuantitySelector"
 import { ColorSelector } from "./ColorSelector"
 import { SizeSelector } from "./SizeSelector"
-import { ShoppingCart, Heart } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type VariantView = {
@@ -108,13 +108,6 @@ export const ProductInfo = ({ product, variants, colors, sizes, className }: Pro
                 </div>
             </div>
 
-            {/* Description */}
-            {/* <div>
-                <p className="text-gray-600 leading-relaxed">
-                    {product.description}
-                </p>
-            </div> */}
-
             {/* Color Selection */}
             {colors.length > 0 && (
                 <ColorSelector
@@ -146,24 +139,17 @@ export const ProductInfo = ({ product, variants, colors, sizes, className }: Pro
 
             {/* Action Buttons */}
             <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4">
+
                     <Button
                         onClick={handleAddToCart}
-                        className="flex-1 bg-crexy-primary hover:bg-crexy-primary/90 text-white"
+                        className="w-full bg-crexy-primary hover:bg-crexy-primary/90 text-white"
                         size="lg"
                         disabled={!matchedVariant}
                     >
                         <ShoppingCart className="w-5 h-5 mr-2" />
                         Thêm vào giỏ
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="px-4 sm:px-6"
-                    >
-                        <Heart className="w-5 h-5" />
-                    </Button>
-                </div>
+
                 
                 <Button
                     onClick={handleBuyNow}

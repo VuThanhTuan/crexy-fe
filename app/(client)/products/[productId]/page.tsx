@@ -77,7 +77,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <div className="bg-gray-50 pt-30">
             {/* Header */}
             <TopBar variant="solid" />
-            
+
             {/* Breadcrumb */}
             <div className="bg-white border-b">
                 <div className="container mx-auto px-4 py-4">
@@ -86,17 +86,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </div>
 
             {/* Main Content */}
-            <div className="container mx-auto px-4 py-8 pb-16">
+            <div className="container mx-auto px-4 py-8 lg:pb-16">
                 {/* Product Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:mb-16">
                     {/* Product Images */}
                     <ProductImageGallery
                         images={images}
                         productName={product.name}
                     />
-                    
+
                     {/* Product Info */}
-                    <ProductInfo 
+                    <ProductInfo
                         product={{
                             id: product.id,
                             name: product.name,
@@ -112,18 +112,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </div>
 
                 {/* Product Details */}
-                <div className="mb-16">
+                <div className="mb-8 lg:mb-16">
                     <ProductDetails attributes={product.productAttributes ?? []} />
                 </div>
 
                 {/* Product Description */}
-                <div className="mb-16">
+                <div className="mb-8 lg:mb-16">
                     <ProductDescription description={product.description} />
                 </div>
-
-                {/* Similar Products */}
-                <SimilarProducts products={related} />
             </div>
+            {/* Similar Products */}
+            <SimilarProducts products={related} />
         </div>
     )
 }

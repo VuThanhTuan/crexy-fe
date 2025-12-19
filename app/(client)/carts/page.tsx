@@ -48,8 +48,8 @@ export default function CartPage() {
         <div className="mt-10">
           <h2 className="text-lg font-extrabold text-crexy-secondary mb-4">SẢN PHẨM BÁN CHẠY</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
-            {sampleProducts.slice(0, 5).map(p => (
-              <ProductBox key={p.id} product={p} width="w-full" height="h-[420px]" />
+            {sampleProducts.slice(0, 5).map((p, index) => (
+              <ProductBox key={index} product={p} width="w-full" height="h-[420px]" />
             ))}
           </div>
         </div>
