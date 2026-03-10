@@ -25,7 +25,6 @@ export const StarRating = ({
     const stars = Array.from({ length: maxRating }, (_, index) => {
         const starValue = index + 1
         const isFilled = starValue <= rating
-        const isHalfFilled = starValue === Math.ceil(rating) && rating % 1 !== 0
 
         return (
             <Star

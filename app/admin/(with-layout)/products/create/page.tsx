@@ -15,6 +15,7 @@ interface ProductFormPageProps {
     isActive?: boolean;
     categoryId: string;
     discountId?: string | null;
+    price: number;
     mediaItems: {
       mediaId: string;
       mediaCategory: string;
@@ -23,6 +24,7 @@ interface ProductFormPageProps {
       sizeId: string;
       colorId: string;
       isActive: boolean;
+      price: number;
     }[];
   }) => Promise<void>;
   onCancel: () => void;
@@ -53,6 +55,7 @@ export default function CreateProductPage() {
     isActive?: boolean;
     categoryId: string;
     discountId?: string | null;
+    price: number;
     mediaItems: {
       mediaId: string;
       mediaCategory: string;
@@ -61,6 +64,7 @@ export default function CreateProductPage() {
       sizeId: string;
       colorId: string;
       isActive: boolean;
+      price: number;
     }[];
   }) => {
     setIsSubmitting(true);

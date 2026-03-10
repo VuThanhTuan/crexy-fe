@@ -1,7 +1,6 @@
 "use client"
 
-import { ProductBox, Product } from "@/components/ProductBox"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Product } from "@/components/ProductBox"
 import { ProductGrid } from "../../_components/ProductGrid"
 
 interface SimilarProductsProps {

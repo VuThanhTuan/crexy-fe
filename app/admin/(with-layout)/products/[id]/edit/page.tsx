@@ -24,6 +24,7 @@ interface ProductFormPageProps {
       sizeId: string;
       colorId: string;
       isActive: boolean;
+      price: number;
     }[];
   }) => Promise<void>;
   onCancel: () => void;
@@ -86,6 +87,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
       sizeId: string;
       colorId: string;
       isActive: boolean;
+      price: number;
     }[];
   }) => {
     setIsSubmitting(true);

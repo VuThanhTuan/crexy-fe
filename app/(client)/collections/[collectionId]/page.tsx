@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import TopBar from "../../_components/top-bar"
-import { Footer } from "../../_components/footer"
 import { CollectionHeader } from "../_components/CollectionHeader"
 import { Product } from "@/components/ProductBox"
 import { ProductGrid } from "../../products/_components/ProductGrid"

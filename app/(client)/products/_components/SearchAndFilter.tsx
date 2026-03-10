@@ -1,5 +1,5 @@
 "use client"
-import { Search, Filter, SortAscIcon } from "lucide-react"
+import { Search, SortAscIcon } from "lucide-react"
 import * as HoverCard from "@radix-ui/react-hover-card"
 import { cn } from "@/lib/utils"
 import { useState } from "react"

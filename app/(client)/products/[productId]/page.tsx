@@ -9,7 +9,7 @@ import { ProductBreadcrumb } from "./_components/ProductBreadcrumb"
 import { fetchProductById, fetchRelatedProducts, extractImages, mapVariants, uniqueDefined } from "@/services/products.service";
 import type { Product as CardProduct } from "@/components/ProductBox";
 
-type PageProps = { params: { productId: string } };
+type PageProps = { params: Promise<{ productId: string }> };
 
 export default async function ProductDetailPage({ params }: PageProps) {
     const { productId } = await params;

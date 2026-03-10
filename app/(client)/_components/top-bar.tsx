@@ -7,7 +7,6 @@ import { useModalStore } from "@/hooks/use-modal-store"
 import {
     NavigationMenu,
     NavigationMenuItem,
-    NavigationMenuLink,
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { useEffect, useState } from "react"

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import type { Collection } from "@/types/collection";
+import type { Collection, ProductInCollection } from "@/types/collection";
 import { useEffect, useState } from "react";
 import { MediaPickerModal, ImageSelector } from "@/components/MediaPicker";
 import type { Media } from "@/types/media";
@@ -52,10 +52,17 @@ export function CollectionFormPage({
 }: CollectionFormPageProps) {
   const router = useRouter();
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(
-    initialData?.media || null
+    initialData?.media ? {
+      ...initialData.media,
+      originName: initialData.media.name,
+      mediaType: 'image' as const,
+      mimeType: initialData.media.mimeType || 'image/jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } : null
   );
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
-  const [products, setProducts] = useState<Product[]>(
+  const [products, setProducts] = useState<ProductInCollection[]>(
     initialData?.products || []
   );
   const [isProductSelectModalOpen, setIsProductSelectModalOpen] = useState(false);
@@ -87,7 +94,14 @@ export function CollectionFormPage({
         slug: initialData.slug || "",
         mediaId: initialData.media?.id || "",
       });
-      setSelectedMedia(initialData.media || null);
+      setSelectedMedia(initialData.media ? {
+        ...initialData.media,
+        originName: initialData.media.name,
+        mediaType: 'image' as const,
+        mimeType: initialData.media.mimeType || 'image/jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      } : null);
       setProducts(initialData.products || []);
     }
   }, [initialData, reset]);
@@ -106,7 +120,23 @@ export function CollectionFormPage({
   const handleAddProduct = (product: Product) => {
     // Kiểm tra xem sản phẩm đã có chưa
     if (!products.find((p) => p.id === product.id)) {
-      setProducts([...products, product]);
+      const productInCollection: ProductInCollection = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        primaryImage: product.primaryImage ? {
+          id: product.primaryImage.id,
+          name: product.primaryImage.name,
+          originName: product.primaryImage.originName,
+          url: product.primaryImage.url,
+          mediaType: product.primaryImage.mediaType,
+          mimeType: product.primaryImage.mimeType,
+          size: product.primaryImage.size,
+          width: product.primaryImage.width,
+          height: product.primaryImage.height,
+        } : undefined
+      };
+      setProducts([...products, productInCollection]);
     }
   };
 

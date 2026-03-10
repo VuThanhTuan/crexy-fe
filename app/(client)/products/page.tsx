@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { CategoryFilter } from "./_components/CategoryFilter"
 import { useCategoryStore } from "@/hooks/use-category-store"
@@ -12,7 +12,7 @@ import { Product } from "@/components/ProductBox"
 
 const ITEMS_PER_PAGE = 15
 
-export default function ProductsPage() {
+function ProductsPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -194,5 +194,13 @@ export default function ProductsPage() {
                 </div>
             )}
         </div>
+    )
+}
+
+export default function ProductsPage() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+            <ProductsPageContent />
+        </Suspense>
     )
 }

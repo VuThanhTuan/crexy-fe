@@ -3,8 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import InputGroup from "@/components/FormElements/InputGroup";
-import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Button } from "@/components/ui/button";
 import type { Collection } from "@/types/collection";
 import { useEffect, useState } from "react";
@@ -42,7 +40,14 @@ export function CollectionForm({
   isSubmitting,
 }: CollectionFormProps) {
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(
-    initialData?.media || null
+    initialData?.media ? {
+      ...initialData.media,
+      originName: initialData.media.name,
+      mediaType: 'image' as const,
+      mimeType: initialData.media.mimeType || 'image/jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } : null
   );
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -81,7 +86,14 @@ export function CollectionForm({
         mediaId: initialData.media?.id || "",
         productIds: initialData.products?.map((p) => p.id) || [],
       });
-      setSelectedMedia(initialData.media || null);
+      setSelectedMedia(initialData.media ? {
+        ...initialData.media,
+        originName: initialData.media.name,
+        mediaType: 'image' as const,
+        mimeType: initialData.media.mimeType || 'image/jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      } : null);
       setSelectedProductIds(initialData.products?.map((p) => p.id) || []);
     }
   }, [initialData, reset]);

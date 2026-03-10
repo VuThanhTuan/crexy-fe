@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import type { Discount, DiscountType } from "@/types/discount";
+import type { Discount } from "@/types/discount";
 import { useEffect } from "react";
 
 const discountSchema = z
@@ -15,10 +15,10 @@ const discountSchema = z
       .max(255, "Tên mã giảm giá không được vượt quá 255 ký tự"),
     value: z.string().optional(),
     discountType: z.enum(["percentage", "fixed"], {
-      errorMap: () => ({ message: "Vui lòng chọn loại giảm giá" }),
+      message: "Vui lòng chọn loại giảm giá",
     }),
     discountValue: z
-      .number({ invalid_type_error: "Giá trị giảm giá phải là số" })
+      .number({ message: "Giá trị giảm giá phải là số" })
       .int("Giá trị giảm giá phải là số nguyên")
       .min(0, "Giá trị giảm giá phải lớn hơn hoặc bằng 0"),
   })
